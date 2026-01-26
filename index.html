@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anfas - Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Lucide Icons (CDN) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div class="grain-overlay"></div>
+    <div class="content-wrapper">
+        <!-- Header -->
+        <header class="header">
+            <div class="container header-content">
+                <div class="logo">ANFAS.</div>
+                <nav class="nav-container">
+                    <ul class="nav-menu">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#service">Service</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <a href="contact.html" class="btn btn-outline">Hire Me</a>
+                    <button class="menu-toggle" id="menuToggle">
+                        <i data-lucide="menu"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Hero Section -->
+            <section id="home" class="hero">
+                <div class="container hero-grid">
+                    <div class="hero-text">
+                        <div class="badge">
+                            <span class="dot"></span> Available for work
+                        </div>
+                        <h1>I'm Anfas, UI/UX Designer and Front-end Developer Based in India.</h1>
+                        <p>Building platforms where technology meets human need with seamless user interface design.</p>
+                        <div class="hero-btns">
+                            <a href="contact.html" class="btn btn-primary">Let's talk</a>
+                            <a href="#work" class="btn btn-outline">My Works</a>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="cube-container">
+                            <img src="Assets/cube.png" alt="3D Cube" class="cube-img">
+                            <div class="hero-glow"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills Marquee Wrapper for 3D Perspective -->
+            <!-- Dual-Layer Kinetic Marquee -->
+            <div class="kinetic-marquee-section">
+                <!-- Track 1: Filled Text (Moving Left) -->
+                <div class="marquee-track track-filled">
+                    <span>UI/UX Design</span>
+                    <span class="divider">✦</span>
+                    <span>Web Development</span>
+                    <span class="divider">✦</span>
+                    <span>Motion Graphics</span>
+                    <span class="divider">✦</span>
+                    <span>Figma</span>
+                    <span class="divider">✦</span>
+                    <span>Frontend Dev</span>
+                    <span class="divider">✦</span>
+                    <span>UI/UX Design</span>
+                    <span class="divider">✦</span>
+                    <span>Web Development</span>
+                    <span class="divider">✦</span>
+                    <span>Motion Graphics</span>
+                    <span class="divider">✦</span>
+                    <span>Figma</span>
+                    <span class="divider">✦</span>
+                    <span>Frontend Dev</span>
+                </div>
+
+                <!-- Track 2: Outlined Text (Moving Right) -->
+                <div class="marquee-track track-outlined">
+                    <span>Interaction Design</span>
+                    <span class="divider">✦</span>
+                    <span>Prototyping</span>
+                    <span class="divider">✦</span>
+                    <span>User Research</span>
+                    <span class="divider">✦</span>
+                    <span>React.js</span>
+                    <span class="divider">✦</span>
+                    <span>Creative Coding</span>
+                    <span class="divider">✦</span>
+                    <span>Interaction Design</span>
+                    <span class="divider">✦</span>
+                    <span>Prototyping</span>
+                    <span class="divider">✦</span>
+                    <span>User Research</span>
+                    <span class="divider">✦</span>
+                    <span>React.js</span>
+                    <span class="divider">✦</span>
+                    <span>Creative Coding</span>
+                </div>
+            </div>
+
+            <!-- About Section -->
+            <section id="about" class="about">
+                <div class="glow-bg" style="top: 20%; left: -100px;"></div>
+                <div class="container about-grid reveal-on-scroll">
+                    <div class="about-image">
+                        <div class="image-placeholder">
+                            <img src="./Assets/857.jpg" alt="">
+                        </div>
+                    </div>
+                    <div class="about-content">
+                        <span class="section-subtitle">ABOUT ME</span>
+                        <h2>I'm a Professional UI/UX Designer and Front-end Developer Based in India</h2>
+                        <p>Over the past years, I have worked with multiple clients and companies globally to create
+                            professional website designs and front-end development solutions.</p>
+                        <p>My aim is to deliver excellence in design that aligns with your brand and is easy for users
+                            to
+                            interact with.</p>
+                        <a href="./Assets/MOHAMMED-ANFAS-CV.pdf" class="btn btn-primary">Download CV</a>
+                    </div>
+                </div>
+                <div class="container stats-grid">
+                    <div class="stat-card reveal-on-scroll">
+                        <h3><span class="stat-number" data-target="01">0</span><span>+</span></h3>
+                        <p>Years of experience</p>
+                    </div>
+                    <div class="stat-card reveal-on-scroll">
+                        <h3><span class="stat-number" data-target="20">0</span><span>+</span></h3>
+                        <p>Projects completed</p>
+                    </div>
+                    <div class="stat-card reveal-on-scroll">
+                        <h3><span class="stat-number" data-target="98">0</span><span>%</span></h3>
+                        <p>Clients satisfaction</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section id="service" class="services">
+                <div class="container">
+                    <div class="section-header reveal-on-scroll">
+                        <span class="section-subtitle">SERVICES</span>
+                        <h2>My specialities</h2>
+                    </div>
+                    <!-- Cinematic Split Services -->
+                    <div class="service-split-container">
+
+                        <!-- LEFT PANEL: DESIGN -->
+                        <div class="service-panel panel-design">
+                            <div class="panel-bg"></div>
+                            <div class="panel-content">
+                                <span class="panel-subtitle">01</span>
+                                <h2 class="panel-title">UI/UX</h2>
+
+                                <div class="panel-hidden-info">
+                                    <p>Intuitive, user-centered interfaces that captivate and convert.</p>
+                                    <span class="explore-link">Explore Design <i data-lucide="arrow-right"></i></span>
+                                </div>
+                            </div>
+
+                            <!-- Floating Assets (Design) -->
+                            <div class="floating-assets design-assets">
+                                <div class="ui-plate plate-main-pill">
+                                    <span>UI/UX Designing</span>
+                                    <div class="toggle-switch"></div>
+                                </div>
+                                <div class="ui-plate plate-screen-left">
+                                    <div class="mini-ui-header"></div>
+                                    <div class="mini-ui-body"></div>
+                                </div>
+                                <div class="ui-plate plate-screen-center">
+                                    <div class="mini-card-row"></div>
+                                    <div class="mini-card-row short"></div>
+                                </div>
+                                <div class="ui-plate plate-screen-right">
+                                    <div class="circle-icon"></div>
+                                </div>
+                                <div class="ui-plate plate-widget-top-left"><i data-lucide="bell"></i></div>
+                                <div class="ui-plate plate-widget-top-right"><i data-lucide="menu"></i></div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT PANEL: DEVELOPMENT -->
+                        <div class="service-panel panel-code">
+                            <div class="panel-bg"></div>
+                            <div class="panel-content">
+                                <span class="panel-subtitle">02</span>
+                                <h2 class="panel-title">DEV</h2>
+
+                                <div class="panel-hidden-info">
+                                    <p>Clean, efficient code building the backbone of modern web experiences.</p>
+                                    <span class="explore-link">View Tech Stack <i data-lucide="arrow-right"></i></span>
+                                </div>
+                            </div>
+
+                            <!-- Floating Assets (Code) -->
+                            <div class="floating-assets code-assets">
+                                <div class="code-plate code-1"><span>&lt;/&gt;</span></div>
+                                <div class="code-plate code-2"><span>function()</span></div>
+                                <div class="code-plate code-hero">
+                                    <div class="code-lines">
+                                        <span class="line l1"></span>
+                                        <span class="line l2"></span>
+                                        <span class="line l3"></span>
+                                    </div>
+                                    <span>Web Developer</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <!-- Projects Section (Sticky 3D Stack) -->
+            <section id="work" class="projects">
+                <div class="container">
+                    <div class="section-header reveal-on-scroll">
+                        <span class="section-subtitle">SELECTED WORKS</span>
+                        <h2>Featured Projects</h2>
+                    </div>
+
+                    <!-- Sticky Stack Wrapper -->
+                    <div class="stack-area">
+                        <!-- Project 1 -->
+                        <div class="card-wrapper sticky-card">
+                            <div class="project-card" data-index="0">
+                                <div class="project-visual">
+                                    <img src="./Assets/Change_the_background_of__subject_1__to_a_cozy_cafe_setting_with_warm_lighting_.png"
+                                        alt="Mijuby">
+                                    <div class="visual-overlay"></div>
+                                </div>
+                                <div class="project-content">
+                                    <div class="project-meta">
+                                        <span class="p-num">01</span>
+                                        <div class="project-tags">
+                                            <span>UX/UI Design</span>
+                                            <span>Development</span>
+                                        </div>
+                                    </div>
+                                    <h3>Logi Company</h3>
+                                    <p>A modern SaaS landing page designed to convert visitors into loyal customers.</p>
+                                    <a href="./Assets/logi company/index.html" class="btn-link">View Project <i
+                                            data-lucide="arrow-up-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 2 -->
+                        <div class="card-wrapper sticky-card">
+                            <div class="project-card" data-index="1">
+                                <div class="project-visual">
+                                    <img src="./Assets/ChatGPT Image Jan 21, 2026, 04_15_42 PM.png" alt="Verto">
+                                    <div class="visual-overlay"></div>
+                                </div>
+                                <div class="project-content">
+                                    <div class="project-meta">
+                                        <span class="p-num">02</span>
+                                        <div class="project-tags">
+                                            <span>Brand Design</span>
+                                            <span>Visuals</span>
+                                        </div>
+                                    </div>
+                                    <h3>Verto</h3>
+                                    <p>A minimalist brand identity system built for a tech startup focusing on vertical
+                                        integration.</p>
+                                    <a href="https://anfas-afk.github.io/AURELIA/" class="btn-link">View Project <i
+                                            data-lucide="arrow-up-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 3 -->
+                        <div class="card-wrapper sticky-card">
+                            <div class="project-card" data-index="2">
+                                <div class="project-visual">
+                                    <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=800&q=80"
+                                        alt="Healthify">
+                                    <div class="visual-overlay"></div>
+                                </div>
+                                <div class="project-content">
+                                    <div class="project-meta">
+                                        <span class="p-num">03</span>
+                                        <div class="project-tags">
+                                            <span>Mobile App</span>
+                                            <span>UX Research</span>
+                                        </div>
+                                    </div>
+                                    <h3>Healthify</h3>
+                                    <p>Comprehensive health tracking application with a focus on simplicity and
+                                        accessibility.</p>
+                                    <a href="#" class="btn-link">View Project <i data-lucide="arrow-up-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 4 -->
+                        <div class="card-wrapper sticky-card">
+                            <div class="project-card" data-index="3">
+                                <div class="project-visual">
+                                    <img src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=800&q=80"
+                                        alt="NexGen">
+                                    <div class="visual-overlay"></div>
+                                </div>
+                                <div class="project-content">
+                                    <div class="project-meta">
+                                        <span class="p-num">04</span>
+                                        <div class="project-tags">
+                                            <span>Web Platform</span>
+                                            <span>React</span>
+                                        </div>
+                                    </div>
+                                    <h3>NexGen</h3>
+                                    <p>Next-generation dashboard for data visualization and management of complex
+                                        systems.
+                                    </p>
+                                    <a href="" class="btn-link">View Project <i data-lucide="arrow-up-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section Removed -->
+
+            <!-- CTA Section -->
+            <section class="cta">
+                <div class="glow-bg"
+                    style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px;"></div>
+                <div class="container cta-content reveal-on-scroll">
+                    <div class="badge">
+                        <span class="dot"></span> Available for work
+                    </div>
+                    <h2>Let's work together to transform your ideas into stunning design</h2>
+                    <a href="contact.html" class="btn btn-primary">Let's Talk</a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <!-- PREMIUM FOOTER: The Interface Horizon -->
+    <!-- PREMIUM FOOTER: Zero-Gravity Glass Chamber -->
+    <!-- PREMIUM FOOTER: The Chromatic Ripple -->
+    <footer class="footer-premium" id="footer">
+
+        <!-- Aurora Background -->
+        <div class="aurora-bg">
+            <div class="aurora-blob b-1"></div>
+            <div class="aurora-blob b-2"></div>
+            <div class="aurora-blob b-3"></div>
+        </div>
+
+        <div class="chromatic-container container">
+
+            <!-- Fluid Typography Header -->
+            <div class="fluid-header">
+                <h1 class="ripple-text">ELEVATE</h1>
+                <h1 class="ripple-text text-outline">YOUR VISION</h1>
+            </div>
+
+            <!-- Frosted Glass Dock -->
+            <div class="frosted-dock">
+                <div class="dock-pill">
+                    <a href="mailto:anfas@example.com" class="dock-link" data-tooltip="Email">
+                        <i data-lucide="mail"></i>
+                    </a>
+                    <a href="https://www.instagram.com/anf4ll" target="_blank" class="dock-link"
+                        data-tooltip="Instagram">
+                        <i data-lucide="instagram"></i>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" class="dock-link" data-tooltip="LinkedIn">
+                        <i data-lucide="linkedin"></i>
+                    </a>
+                    <div class="dock-divider"></div>
+                    <a href="contact.html" class="dock-cta">
+                        <span>Start Project</span>
+                        <div class="glow-dot"></div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Minimal Info -->
+            <div class="chromatic-info">
+                <span>ANFAS © 2026</span>
+                <span id="localTime">00:00 IST</span>
+            </div>
+
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
