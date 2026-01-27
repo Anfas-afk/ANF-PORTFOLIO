@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anfas - Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=1.4">
     <!-- Lucide Icons (CDN) -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -38,22 +38,34 @@
         <main>
             <!-- Hero Section -->
             <section id="home" class="hero">
-                <div class="container hero-grid">
-                    <div class="hero-text">
-                        <div class="badge">
+                <div class="container hero-grid-split">
+                    <!-- Left Column -->
+                    <div class="hero-col left">
+                        <div class="badge-solid">
                             <span class="dot"></span> Available for work
                         </div>
-                        <h1>I'm Anfas, UI/UX Designer and Front-end Developer Based in India.</h1>
-                        <p>Building platforms where technology meets human need with seamless user interface design.</p>
-                        <div class="hero-btns">
+                        <span class="small-label">I'm Anfas</span>
+                        <h1 class="giant-text">UI/UX</h1>
+                        <h1 class="giant-text outline-text">DESIGNER</h1>
+                        <div class="hero-btns-left">
                             <a href="contact.html" class="btn btn-primary">Let's talk</a>
-                            <a href="#work" class="btn btn-outline">My Works</a>
                         </div>
                     </div>
-                    <div class="hero-visual">
+
+                    <!-- Center Column (Image) -->
+                    <div class="hero-col center">
                         <div class="cube-container">
                             <img src="Assets/cube.png" alt="3D Cube" class="cube-img">
                             <div class="hero-glow"></div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="hero-col right">
+                        <div class="hero-details-right">
+                            <h2 class="sub-giant-text">Front-end <br> <span class="highlight">Developer</span></h2>
+                            <p>Building platforms where technology meets human need with seamless user interface design.
+                            </p>
                         </div>
                     </div>
                 </div>
