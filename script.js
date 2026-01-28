@@ -507,6 +507,50 @@ const animateAurora = () => {
     requestAnimationFrame(animateAurora);
 };
 
+
 // Start animation loop
 animateAurora();
+
+// --------------------------------------------------------------------------
+// PREMIUM HERO INTERACTIONS (Parallax & Reveal)
+// --------------------------------------------------------------------------
+const heroPremium = document.querySelector('.hero-premium');
+const bgText = document.querySelector('.hero-bg-text');
+const heroVisualFrame = document.querySelector('.hero-visual-frame');
+const floaters = document.querySelectorAll('.glass-floater');
+
+if (heroPremium) {
+    // Parallax on Mouse Move
+    heroPremium.addEventListener('mousemove', (e) => {
+        const x = (window.innerWidth / 2 - e.clientX) / 20;
+        const y = (window.innerHeight / 2 - e.clientY) / 20;
+
+        // 1. Background Text - Subtle opposite movement
+        if (bgText) {
+            bgText.style.transform = `translate(${-50 + x * 0.2}%, ${-50 + y * 0.2}%)`;
+        }
+
+        // 2. Visual Frame - Slight tilt
+        if (heroVisualFrame) {
+            const rotX = (y / 10).toFixed(2);
+            const rotY = (-x / 10).toFixed(2);
+            heroVisualFrame.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        }
+
+        // 3. Floating Elements - Deeper layer movement
+        floaters.forEach((el, index) => {
+            const factor = (index + 1) * 0.5;
+            el.style.transform = `translate(${x * factor}px, ${y * factor - (index % 2 === 0 ? 15 : 0)}px)`; // Keep the initial float offset logic if possible, or just overwrite safely
+        });
+    });
+
+    // Reset on Leave
+    heroPremium.addEventListener('mouseleave', () => {
+        if (bgText) bgText.style.transform = 'translate(-50%, -50%)';
+        if (heroVisualFrame) heroVisualFrame.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+        floaters.forEach(el => el.style.transform = 'translate(0, 0)');
+    });
+}
+
+
 
