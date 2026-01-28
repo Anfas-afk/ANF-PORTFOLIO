@@ -553,4 +553,18 @@ if (heroPremium) {
 }
 
 
+// --------------------------------------------------------------------------
+// SERVICE SECTION EXPANSION (Mobile - Touch to Expand)
+// --------------------------------------------------------------------------
+const serviceContainer = document.querySelector('.service-split-container');
+if (serviceContainer) {
+    // User requested "touch" (click) to expand to 800px
+    serviceContainer.addEventListener('click', () => {
+        // Toggle the expanded class
+        serviceContainer.classList.toggle('touch-expand');
+    });
+}
+
+
+
 
