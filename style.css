@@ -255,10 +255,12 @@ ul {
     transition: all 0.3s ease;
 }
 
-.header.sticky .nav-container {
-    background: transparent;
-    border: none;
-    padding: 0;
+@media (min-width: 769px) {
+    .header.sticky .nav-container {
+        background: transparent;
+        border: none;
+        padding: 0;
+    }
 }
 
 .nav-menu {
@@ -279,6 +281,17 @@ ul {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-icon {
+    display: none;
+}
+
+.desktop-text {
+    display: block;
 }
 
 .nav-menu a:hover,
@@ -295,8 +308,88 @@ ul {
     display: none;
     background: none;
     border: none;
-    color: var(--white);
     cursor: pointer;
+    padding: 10px;
+    z-index: 2000;
+}
+
+/* Custom Hamburger Box */
+.hamburger-box {
+    display: inline-block;
+    width: 24px;
+    height: 14px;
+    position: relative;
+    /* vertical-align: middle; */
+}
+
+/* Inner Lines */
+.hamburger-inner {
+    display: block;
+    top: 50%;
+    margin-top: -1px;
+}
+
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after {
+    height: 2px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    position: absolute;
+    transition: all 0.3s ease;
+}
+
+/* Staggered Icon Styles */
+.hamburger-inner {
+    width: 14px;
+    /* Middle line */
+    right: 0;
+}
+
+.hamburger-inner::before {
+    content: "";
+    display: block;
+    width: 24px;
+    /* Top line */
+    right: 0;
+    top: -6px;
+}
+
+.hamburger-inner::after {
+    content: "";
+    display: block;
+    width: 12px;
+    /* Bottom line */
+    right: 12px;
+    /* Aligned left (24px - 12px = 12px) */
+    bottom: -6px;
+}
+
+/* Animation State: Active */
+.menu-toggle.is-active .hamburger-inner {
+    width: 24px;
+    transform: rotate(45deg);
+}
+
+.menu-toggle.is-active .hamburger-inner::before {
+    width: 24px;
+    top: 0;
+    opacity: 0;
+}
+
+.menu-toggle.is-active .hamburger-inner::after {
+    width: 24px;
+    right: 0;
+    bottom: 0;
+    transform: rotate(-90deg);
+}
+
+.menu-toggle:hover .hamburger-inner::before {
+    transform: translateY(-1px);
+}
+
+.menu-toggle:hover .hamburger-inner::after {
+    transform: translateY(1px);
 }
 
 /* =========================================
@@ -907,7 +1000,6 @@ ul {
     text-align: center;
     transition: transform 0.6s ease;
     pointer-events: none;
-    padding-top: 90px;
     /* Let clicks pass to panel */
 }
 
@@ -979,6 +1071,8 @@ ul {
     gap: 6px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    pointer-events: auto;
+    cursor: pointer;
 }
 
 /* --- FLOATING ASSETS (The Magic) --- */
@@ -1173,8 +1267,8 @@ ul {
     }
 
     .service-panel {
-        justify-content: flex-start;
-        padding-top: 80px;
+        justify-content: center;
+        padding-top: 0;
     }
 
     .service-panel:hover .plate-main-pill {
@@ -1920,15 +2014,6 @@ ul {
         /* Ensure visible on scroll */
     }
 
-    .header.sticky .nav-container {
-        display: flex;
-        /* Ensure overlay works */
-        background: transparent;
-        /* Reset sticky override */
-        border: none;
-        padding: 0;
-    }
-
     /* 2. Reset Header Layout */
     .header-content {
         padding: 0 20px;
@@ -1945,12 +2030,11 @@ ul {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 66px;
-        height: 38px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
+        width: auto;
+        height: auto;
+        padding: 10px;
+        background: transparent;
+        border: none;
         margin-left: 10px;
         z-index: 1002;
         transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1960,47 +2044,54 @@ ul {
         transform: scale(0.9);
     }
 
-    /* 4. Mobile Menu Overlay */
+    /* 4. Mobile Menu Vertical Pill (Gooey Style) */
     .nav-container {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: rgba(10, 10, 10, 0.98);
-        backdrop-filter: blur(25px);
-        -webkit-backdrop-filter: blur(25px);
+        top: 90px;
+        /* Below header */
+        right: 20px;
+        /* Aligned to edge */
+        width: 60px;
+        height: auto;
+        /* Fit content */
+        background: rgba(0, 0, 0, 0.4) !important;
+        /* Dark theme match */
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
+        padding: 20px 0;
+        gap: 15px;
 
         opacity: 0;
         visibility: hidden;
-        transform: translateY(-20px);
-        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        transform: translateY(-20px) scale(0.8);
+        transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        /* Bouncy */
 
-        border: none;
-        border-radius: 0;
-        padding: 0;
-        margin: 0;
+        /* border: none; Removed conflicting duplicate border property */
+        border-radius: 40px;
         z-index: 1001;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     }
 
     .nav-container.active {
         opacity: 1;
         visibility: visible;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 
     /* 5. Nav Items & Links */
     .nav-menu {
         flex-direction: column;
-        gap: 25px;
+        gap: 15px;
         text-align: center;
         width: 100%;
         display: flex !important;
-        /* Force flex */
+        padding: 0;
     }
 
     .nav-menu li {
@@ -2008,8 +2099,8 @@ ul {
         display: flex;
         justify-content: center;
         opacity: 0;
-        transform: translateY(20px);
-        transition: transform 0.4s ease, opacity 0.4s ease;
+        transform: translateY(-10px);
+        transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
     .nav-container.active .nav-menu li {
@@ -2017,34 +2108,38 @@ ul {
         transform: translateY(0);
     }
 
-    /* Staggered Delay */
-    .nav-container.active .nav-menu li:nth-child(1) {
-        transition-delay: 0.1s;
-    }
-
-    .nav-container.active .nav-menu li:nth-child(2) {
-        transition-delay: 0.15s;
-    }
-
-    .nav-container.active .nav-menu li:nth-child(3) {
-        transition-delay: 0.2s;
-    }
-
-    .nav-container.active .nav-menu li:nth-child(4) {
-        transition-delay: 0.25s;
+    .nav-item-wrapper {
+        display: contents;
     }
 
     .nav-menu a {
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--white);
-        text-transform: capitalize;
-        letter-spacing: -0.5px;
         padding: 10px;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        color: var(--white);
     }
 
-    .nav-menu a:hover {
-        color: var(--accent-purple);
+    .desktop-text {
+        display: none !important;
+    }
+
+    .mobile-icon {
+        display: block !important;
+        width: 24px;
+        height: 24px;
+        color: var(--white);
+    }
+
+    /* Active State Style for Icon */
+    .nav-menu a.active .mobile-icon,
+    .nav-menu a:hover .mobile-icon {
+        fill: var(--white);
+        /* Optional filled effect */
     }
 
     /* 6. Header Actions */
@@ -3039,6 +3134,7 @@ body.show-reveal .cursor-image-wrapper {
     position: relative;
     z-index: 10;
     padding: 0 40px;
+    padding-top: 120px;
 }
 
 /* 1. Aurora Background */
@@ -3350,6 +3446,10 @@ body.show-reveal .cursor-image-wrapper {
 
     .btn {
         padding: 9px 0px;
+    }
+
+    .nav-container {
+        top: 120px;
     }
 
 }

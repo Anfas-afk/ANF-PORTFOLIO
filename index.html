@@ -19,17 +19,38 @@
                 <div class="logo">ANFAS.</div>
                 <nav class="nav-container">
                     <ul class="nav-menu">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#service">Service</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-
+                        <li>
+                            <a href="#home" aria-label="Home">
+                                <span class="desktop-text">Home</span>
+                                <i data-lucide="home" class="mobile-icon"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#about" aria-label="About">
+                                <span class="desktop-text">About</span>
+                                <i data-lucide="user" class="mobile-icon"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#service" aria-label="Services">
+                                <span class="desktop-text">Service</span>
+                                <i data-lucide="briefcase" class="mobile-icon"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="contact.html" aria-label="Contact">
+                                <span class="desktop-text">Contact</span>
+                                <i data-lucide="mail" class="mobile-icon"></i>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <div class="header-actions">
                     <a href="contact.html" class="btn btn-outline">Hire Me</a>
-                    <button class="menu-toggle" id="menuToggle">
-                        <i data-lucide="menu"></i>
+                    <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                        <span class="hamburger-box">
+                            <span class="hamburger-inner"></span>
+                        </span>
                     </button>
                 </div>
             </div>

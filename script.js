@@ -8,18 +8,17 @@ const body = document.body;
 
 if (menuToggle && navContainer) {
     const toggleMenu = (isOpen) => {
-        const icon = menuToggle.querySelector('i');
-
+        // Toggle Active Class for Animation
         if (isOpen) {
             navContainer.classList.add('active');
+            menuToggle.classList.add('is-active');
             body.style.overflow = 'hidden'; // Lock scroll
-            icon.setAttribute('data-lucide', 'x');
         } else {
             navContainer.classList.remove('active');
+            menuToggle.classList.remove('is-active');
             body.style.overflow = ''; // Unlock scroll
-            icon.setAttribute('data-lucide', 'menu');
         }
-        lucide.createIcons();
+        // No need to recreate icons for menu anymore
     };
 
     menuToggle.addEventListener('click', (e) => {
@@ -92,9 +91,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             });
             // Close mobile menu if open
             navMenu.classList.remove('active');
-            const icon = menuToggle.querySelector('i');
-            icon.setAttribute('data-lucide', 'menu');
-            lucide.createIcons();
+            menuToggle.classList.remove('is-active'); // Reset animation
         }
     });
 });
