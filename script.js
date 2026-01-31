@@ -1,24 +1,36 @@
 // Initialize Lucide icons
-lucide.createIcons();
-
-// Initialize Lenis Smooth Scroll
-const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    direction: 'vertical',
-    gestureDirection: 'vertical',
-    smooth: true,
-    mouseMultiplier: 1,
-    smoothTouch: false,
-    touchMultiplier: 2,
-});
-
-function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
+if (window.lucide) {
+    lucide.createIcons();
 }
 
-requestAnimationFrame(raf);
+// Global Mouse Tracking (Required for animations)
+let mouseX = 0;
+let mouseY = 0;
+window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
+
+// Initialize Lenis Smooth Scroll
+if (typeof Lenis !== 'undefined') {
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+    });
+
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+}
 
 // Mobile Menu Toggle (Robust & Smooth)
 const menuToggle = document.getElementById('menuToggle');
@@ -116,44 +128,50 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // Contact Form Handling
-const contactForm = document.getElementById('contactForm');
-const formStatus = document.getElementById('formStatus');
+document.addEventListener('DOMContentLoaded', () => {
 
-if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
 
-        const name = document.getElementById('name').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const subject = document.getElementById('subject').value.trim();
-        const message = document.getElementById('message').value.trim();
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
 
-        if (!name || !email || !message) {
-            formStatus.innerText = 'Please fill in all required fields.';
-            formStatus.className = 'form-status error';
-            return;
-        }
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const subject = document.getElementById('subject').value.trim();
+            const message = document.getElementById('message').value.trim();
 
-        const whatsappNumber = '918590468094';
+            if (!name || !email || !message) {
+                formStatus.innerText = 'Please fill in all required fields.';
+                formStatus.className = 'form-status error';
+                return;
+            }
 
-        const text =
-            `Hello Anfas,%0A%0A` +
-            `Name: ${name}%0A` +
-            `Email: ${email}%0A` +
-            (subject ? `Subject: ${subject}%0A` : '') +
-            `Message: ${message}`;
+            const whatsappNumber = '918590468094';
 
-        const whatsappURL = `https://wa.me/${whatsappNumber}?text=${text}`;
+            const text = `
+Hello Anfas,
 
-        formStatus.innerText = 'Redirecting to WhatsApp…';
-        formStatus.className = 'form-status success';
+Name: ${name}
+Email: ${email}
+${subject ? `Subject: ${subject}` : ''}
+Message: ${message}
+        `;
 
-        setTimeout(() => {
-            window.open(whatsappURL, '_blank');
-            contactForm.reset();
-        }, 600);
-    });
-}
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+
+            formStatus.innerText = 'Redirecting to WhatsApp...';
+            formStatus.className = 'form-status success';
+
+            window.location.href = whatsappURL;
+        });
+    }
+
+});
+
+
+
 
 
 // --------------------------------------------------------------------------

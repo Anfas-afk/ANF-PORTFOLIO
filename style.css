@@ -3150,7 +3150,7 @@ body.show-reveal .cursor-image-wrapper {
     position: relative;
     z-index: 10;
     padding: 0 40px;
-
+    padding-top: 120px;
 }
 
 /* 1. Aurora Background */
