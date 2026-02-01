@@ -3722,10 +3722,13 @@ body.show-reveal .cursor-image-wrapper {
     height: 100vh;
     background: #000;
     z-index: 9999;
+    z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    will-change: opacity;
+    /* Optimize fade out */
 }
 
 /* Reusing .draw styles from previous block */
@@ -3741,6 +3744,8 @@ body.show-reveal .cursor-image-wrapper {
 
 svg {
     width: 70%;
+    will-change: transform;
+    /* Optimize tilt/scale */
 }
 
 /* IMPORTANT: stroke-based animation */

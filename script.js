@@ -536,153 +536,165 @@ if (serviceContainer) {
    =============================== */
 // Wrapped in a block or IIFE to prevent variable collisions if script runs twice
 (() => {
-    const introOverlay = document.querySelector(".intro-overlay");
+    const initIntro = () => {
+        const introOverlay = document.querySelector(".intro-overlay");
 
-    if (introOverlay && typeof gsap !== 'undefined') {
-        console.log("Intro: Starting Animation Sequence");
+        if (introOverlay && typeof gsap !== 'undefined') {
+            console.log("Intro: Starting Animation Sequence");
 
-        // Lock scroll during intro
-        document.body.style.overflow = "hidden";
+            // Lock scroll during intro
+            document.body.style.overflow = "hidden";
 
-        try {
-            const svgElement = introOverlay.querySelector("svg");
+            try {
+                const svgElement = introOverlay.querySelector("svg");
 
-            // Select letters individually
-            const letterA1 = introOverlay.querySelector(".letter-a1");
-            const letterN = introOverlay.querySelector(".letter-n");
-            const letterF = introOverlay.querySelector(".letter-f");
-            const letterA2 = introOverlay.querySelector(".letter-a2");
-            const letterS = introOverlay.querySelector(".letter-s");
+                // Select letters individually
+                const letterA1 = introOverlay.querySelector(".letter-a1");
+                const letterN = introOverlay.querySelector(".letter-n");
+                const letterF = introOverlay.querySelector(".letter-f");
+                const letterA2 = introOverlay.querySelector(".letter-a2");
+                const letterS = introOverlay.querySelector(".letter-s");
 
-            // Group "other" letters
-            const otherLetters = [letterN, letterF, letterA2, letterS];
+                // Group "other" letters
+                const otherLetters = [letterN, letterF, letterA2, letterS];
 
-            /* Prepare paths for stroke animation */
-            const allPaths = introOverlay.querySelectorAll(".draw");
-            allPaths.forEach((path) => {
-                if (path) {
-                    const length = path.getTotalLength();
-                    // Set initial state via CSS styles to ensure no flicker
-                    path.style.strokeDasharray = length;
-                    path.style.strokeDashoffset = length;
-                    path.style.fillOpacity = '0'; // Ensure stroke only first
-                }
-            });
-
-            // --- INTERACTIVE HOLOGRAPHIC TILT ---
-            const tiltEffect = (e) => {
-                const x = (window.innerWidth / 2 - e.clientX) / 20;
-                const y = (window.innerHeight / 2 - e.clientY) / 20;
-
-                gsap.to(svgElement, {
-                    rotationY: x,
-                    rotationX: -y,
-                    duration: 0.5,
-                    ease: "power2.out",
-                    transformPerspective: 1000,
-                    transformOrigin: "center center"
+                /* Prepare paths for stroke animation */
+                const allPaths = introOverlay.querySelectorAll(".draw");
+                allPaths.forEach((path) => {
+                    if (path) {
+                        const length = path.getTotalLength();
+                        // Set initial state via CSS styles to ensure no flicker
+                        path.style.strokeDasharray = length;
+                        path.style.strokeDashoffset = length;
+                        path.style.fillOpacity = '0'; // Ensure stroke only first
+                    }
                 });
-            };
 
-            // Add listener
-            document.addEventListener("mousemove", tiltEffect);
+                // --- INTERACTIVE HOLOGRAPHIC TILT (Optimized) ---
+                // Only add tilt listener if user is active, and maybe not immediately?
+                // Kept simple but relying on CSS will-change
+                const tiltEffect = (e) => {
+                    const x = (window.innerWidth / 2 - e.clientX) / 20;
+                    const y = (window.innerHeight / 2 - e.clientY) / 20;
 
-            /* Timeline (cinematic timing) */
-            const tl = gsap.timeline({
-                ease: "power2.inOut",
-                onComplete: () => {
-                    // Cleanup
-                    document.removeEventListener("mousemove", tiltEffect);
-                    document.body.style.overflow = "";
-
-                    // Fade out and remove
-                    gsap.to(introOverlay, {
-                        opacity: 0,
+                    gsap.to(svgElement, {
+                        rotationY: x,
+                        rotationX: -y,
                         duration: 0.5,
-                        onComplete: () => introOverlay.remove()
+                        ease: "power2.out",
+                        transformPerspective: 1000,
+                        transformOrigin: "center center",
+                        overwrite: 'auto' // Prevent conflict
                     });
-                }
-            });
+                };
 
-            // 0. Initial Setup
-            // Ensure A1 is hidden and above
-            tl.set(letterA1, {
-                y: -150,
-                x: 44,
-                opacity: 0,
-                fillOpacity: 0
-            });
+                // Add listener
+                document.addEventListener("mousemove", tiltEffect);
 
-            // Ensure others are hidden (fill) but prepared for stroke
-            tl.set(otherLetters, {
-                fillOpacity: 0,
-                stroke: "#ffffff" // Ensure visible stroke color
-            });
+                /* Timeline (cinematic timing) */
+                const tl = gsap.timeline({
+                    ease: "power2.inOut",
+                    onComplete: () => {
+                        // Cleanup
+                        document.removeEventListener("mousemove", tiltEffect);
+                        document.body.style.overflow = "";
 
-            // 1. Draw "NFAS"
-            tl.to(otherLetters, {
-                strokeDashoffset: 0,
-                duration: 1.5,
-                stagger: 0.1,
-                ease: "power2.out"
-            });
-
-            // 2. 'A' Falls Down (onto N)
-            tl.to(letterA1, {
-                y: 0,
-                opacity: 1,
-                duration: 0.8,
-                ease: "bounce.out",
-                strokeDashoffset: 0
-            });
-
-            // 3. Sequential Glow (N -> F -> A -> S)
-            const flashGlow = (target) => {
-                return gsap.to(target, {
-                    fillOpacity: 1,
-                    duration: 0.1,
-                    yoyo: true,
-                    repeat: 1
+                        // Fade out and remove
+                        gsap.to(introOverlay, {
+                            opacity: 0,
+                            duration: 0.5,
+                            onComplete: () => introOverlay.remove()
+                        });
+                    }
                 });
-            };
 
-            tl.add(flashGlow(letterN), "+=0.1");
-            tl.add(flashGlow(letterF), "+=0.1");
-            tl.add(flashGlow(letterA2), "+=0.1");
-            tl.add(flashGlow(letterS), "+=0.1");
+                // 0. Initial Setup
+                // Ensure A1 is hidden and above
+                tl.set(letterA1, {
+                    y: -150,
+                    x: 44,
+                    opacity: 0,
+                    fillOpacity: 0
+                });
 
-            // 4. 'A' Slides to Start (Completing "ANFAS")
-            tl.to(letterA1, {
-                x: 0, // Move to original 0 position
-                duration: 0.8,
-                ease: "power3.inOut"
-            });
+                // Ensure others are hidden (fill) but prepared for stroke
+                tl.set(otherLetters, {
+                    fillOpacity: 0,
+                    stroke: "#ffffff" // Ensure visible stroke color
+                });
 
-            // 5. Final Full Glow -> Warp
-            tl.to([letterA1, ...otherLetters], {
-                fillOpacity: 1,
-                duration: 0.5,
-                stroke: "transparent"
-            });
+                // 1. Draw "NFAS"
+                tl.to(otherLetters, {
+                    strokeDashoffset: 0,
+                    duration: 1.5,
+                    stagger: 0.1,
+                    ease: "power2.out"
+                });
 
-            // Explosive Reveal
-            tl.to(svgElement, {
-                scale: 50, // Massive scale
-                opacity: 0,
-                duration: 0.8,
-                ease: "expo.in",
-                filter: "blur(20px)"
-            }, "+=0.1");
+                // 2. 'A' Falls Down (onto N)
+                tl.to(letterA1, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                    ease: "bounce.out",
+                    strokeDashoffset: 0
+                });
 
-        } catch (error) {
-            console.error("Intro Animation Error:", error);
-            // Emergency cleanup
-            document.body.style.overflow = "";
-            introOverlay.style.display = "none";
+                // 3. Sequential Glow (N -> F -> A -> S)
+                const flashGlow = (target) => {
+                    return gsap.to(target, {
+                        fillOpacity: 1,
+                        duration: 0.1,
+                        yoyo: true,
+                        repeat: 1
+                    });
+                };
+
+                tl.add(flashGlow(letterN), "+=0.1");
+                tl.add(flashGlow(letterF), "+=0.1");
+                tl.add(flashGlow(letterA2), "+=0.1");
+                tl.add(flashGlow(letterS), "+=0.1");
+
+                // 4. 'A' Slides to Start (Completing "ANFAS")
+                tl.to(letterA1, {
+                    x: 0, // Move to original 0 position
+                    duration: 0.8,
+                    ease: "power3.inOut"
+                });
+
+                // 5. Final Full Glow -> Warp
+                tl.to([letterA1, ...otherLetters], {
+                    fillOpacity: 1,
+                    duration: 0.5,
+                    stroke: "transparent"
+                });
+
+                // Explosive Reveal
+                tl.to(svgElement, {
+                    scale: 50, // Massive scale
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "expo.in",
+                    filter: "blur(20px)"
+                }, "+=0.1");
+
+            } catch (error) {
+                console.error("Intro Animation Error:", error);
+                // Emergency cleanup
+                document.body.style.overflow = "";
+                introOverlay.style.display = "none";
+            }
+        } else {
+            // Fallback if GSAP missing or element missing
+            if (introOverlay) introOverlay.style.display = "none";
         }
+    };
+
+    // Defer start to ensure smoothness
+    if (document.readyState === 'complete') {
+        setTimeout(initIntro, 100);
     } else {
-        // Fallback if GSAP missing or element missing
-        if (introOverlay) introOverlay.style.display = "none";
+        window.addEventListener('load', () => setTimeout(initIntro, 100));
     }
 })();
 
