@@ -1,36 +1,5 @@
-// Initialize Lucide icons
-if (window.lucide) {
-    lucide.createIcons();
-}
-
-// Global Mouse Tracking (Required for animations)
-let mouseX = 0;
-let mouseY = 0;
-window.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
-
-// Initialize Lenis Smooth Scroll
-if (typeof Lenis !== 'undefined') {
-    const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        direction: 'vertical',
-        gestureDirection: 'vertical',
-        smooth: true,
-        mouseMultiplier: 1,
-        smoothTouch: false,
-        touchMultiplier: 2,
-    });
-
-    function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-    }
-
-    requestAnimationFrame(raf);
-}
+﻿// Initialize Lucide icons
+lucide.createIcons();
 
 // Mobile Menu Toggle (Robust & Smooth)
 const menuToggle = document.getElementById('menuToggle');
@@ -39,17 +8,18 @@ const body = document.body;
 
 if (menuToggle && navContainer) {
     const toggleMenu = (isOpen) => {
-        // Toggle Active Class for Animation
+        const icon = menuToggle.querySelector('i');
+
         if (isOpen) {
             navContainer.classList.add('active');
-            menuToggle.classList.add('is-active');
             body.style.overflow = 'hidden'; // Lock scroll
+            icon.setAttribute('data-lucide', 'x');
         } else {
             navContainer.classList.remove('active');
-            menuToggle.classList.remove('is-active');
             body.style.overflow = ''; // Unlock scroll
+            icon.setAttribute('data-lucide', 'menu');
         }
-        // No need to recreate icons for menu anymore
+        lucide.createIcons();
     };
 
     menuToggle.addEventListener('click', (e) => {
@@ -122,56 +92,52 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             });
             // Close mobile menu if open
             navMenu.classList.remove('active');
-            menuToggle.classList.remove('is-active'); // Reset animation
+            const icon = menuToggle.querySelector('i');
+            icon.setAttribute('data-lucide', 'menu');
+            lucide.createIcons();
         }
     });
 });
 
 // Contact Form Handling
-document.addEventListener('DOMContentLoaded', () => {
+const contactForm = document.getElementById('contactForm');
+const formStatus = document.getElementById('formStatus');
 
-    const contactForm = document.getElementById('contactForm');
-    const formStatus = document.getElementById('formStatus');
+if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
 
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('subject').value.trim();
+        const message = document.getElementById('message').value.trim();
 
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const subject = document.getElementById('subject').value.trim();
-            const message = document.getElementById('message').value.trim();
+        if (!name || !email || !message) {
+            formStatus.innerText = 'Please fill in all required fields.';
+            formStatus.className = 'form-status error';
+            return;
+        }
 
-            if (!name || !email || !message) {
-                formStatus.innerText = 'Please fill in all required fields.';
-                formStatus.className = 'form-status error';
-                return;
-            }
+        const whatsappNumber = '918590468094';
 
-            const whatsappNumber = '918590468094';
+        const text =
+            `Hello Anfas,%0A%0A` +
+            `Name: ${name}%0A` +
+            `Email: ${email}%0A` +
+            (subject ? `Subject: ${subject}%0A` : '') +
+            `Message: ${message}`;
 
-            const text = `
-Hello Anfas,
+        const whatsappURL = `https://wa.me/${whatsappNumber}?text=${text}`;
 
-Name: ${name}
-Email: ${email}
-${subject ? `Subject: ${subject}` : ''}
-Message: ${message}
-        `;
+        formStatus.innerText = 'Redirecting to WhatsAppâ€¦';
+        formStatus.className = 'form-status success';
 
-            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
-
-            formStatus.innerText = 'Redirecting to WhatsApp...';
-            formStatus.className = 'form-status success';
-
-            window.location.href = whatsappURL;
-        });
-    }
-
-});
-
-
-
+        setTimeout(() => {
+            window.open(whatsappURL, '_blank');
+            contactForm.reset();
+        }, 600);
+    });
+}
 
 
 // --------------------------------------------------------------------------
@@ -515,8 +481,12 @@ if (rippleTexts.length > 0) {
 // 2. Aurora Interactive Blobs
 const auroraBlobs = document.querySelectorAll('.aurora-blob');
 
-// mouseX and mouseY are already declared globally at line 308/309
-// We just reuse them here
+let mouseX = 0;
+let mouseY = 0;
+window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
 
 // Smooth animate blobs towards mouse
 const animateAurora = () => {
@@ -541,55 +511,12 @@ const animateAurora = () => {
     requestAnimationFrame(animateAurora);
 };
 
-
 // Start animation loop
 animateAurora();
 
-// --------------------------------------------------------------------------
-// PREMIUM HERO INTERACTIONS (Parallax & Reveal)
-// --------------------------------------------------------------------------
-const heroPremium = document.querySelector('.hero-premium');
-const bgText = document.querySelector('.hero-bg-text');
-const heroVisualFrame = document.querySelector('.hero-visual-frame');
-const floaters = document.querySelectorAll('.glass-floater');
-
-if (heroPremium) {
-    // Parallax on Mouse Move
-    heroPremium.addEventListener('mousemove', (e) => {
-        const x = (window.innerWidth / 2 - e.clientX) / 20;
-        const y = (window.innerHeight / 2 - e.clientY) / 20;
-
-        // 1. Background Text - Subtle opposite movement
-        if (bgText) {
-            bgText.style.transform = `translate(${-50 + x * 0.2}%, ${-50 + y * 0.2}%)`;
-        }
-
-        // 2. Visual Frame - Slight tilt
-        if (heroVisualFrame) {
-            const rotX = (y / 10).toFixed(2);
-            const rotY = (-x / 10).toFixed(2);
-            heroVisualFrame.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
-        }
-
-        // 3. Floating Elements - Deeper layer movement
-        floaters.forEach((el, index) => {
-            const factor = (index + 1) * 0.5;
-            el.style.transform = `translate(${x * factor}px, ${y * factor - (index % 2 === 0 ? 15 : 0)}px)`; // Keep the initial float offset logic if possible, or just overwrite safely
-        });
-    });
-
-    // Reset on Leave
-    heroPremium.addEventListener('mouseleave', () => {
-        if (bgText) bgText.style.transform = 'translate(-50%, -50%)';
-        if (heroVisualFrame) heroVisualFrame.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
-        floaters.forEach(el => el.style.transform = 'translate(0, 0)');
-    });
-}
-
-
-// --------------------------------------------------------------------------
-// SERVICE SECTION EXPANSION (Mobile - Touch to Expand)
-// --------------------------------------------------------------------------
+/* ===============================
+   SERVICE SECTION EXPANSION (MOBILE FIX)
+   =============================== */
 const serviceContainer = document.querySelector('.service-split-container');
 if (serviceContainer) {
     // User requested "touch" (click) to expand to 800px
@@ -601,88 +528,161 @@ if (serviceContainer) {
     });
 }
 
-
-
-
 /* ===============================
-   CINEMATIC INTRO ANIMATION
+   CINEMATIC INTRO ANIMATION (FALLING A)
    =============================== */
+/* ===============================
+   CINEMATIC INTRO ANIMATION (FALLING A)
+   =============================== */
+// Wrapped in a block or IIFE to prevent variable collisions if script runs twice
+(() => {
+    const introOverlay = document.querySelector(".intro-overlay");
 
-const introOverlay = document.querySelector(".intro-overlay");
+    if (introOverlay && typeof gsap !== 'undefined') {
+        console.log("Intro: Starting Animation Sequence");
 
-if (introOverlay) {
-    // Lock scroll during intro
-    document.body.style.overflow = "hidden";
+        // Lock scroll during intro
+        document.body.style.overflow = "hidden";
 
-    const paths = document.querySelectorAll(".draw");
+        try {
+            const svgElement = introOverlay.querySelector("svg");
 
-    /* Prepare paths for stroke animation */
-    paths.forEach((path) => {
-        const length = path.getTotalLength();
-        path.style.strokeDasharray = length;
-        path.style.strokeDashoffset = length;
-    });
+            // Select letters individually
+            const letterA1 = introOverlay.querySelector(".letter-a1");
+            const letterN = introOverlay.querySelector(".letter-n");
+            const letterF = introOverlay.querySelector(".letter-f");
+            const letterA2 = introOverlay.querySelector(".letter-a2");
+            const letterS = introOverlay.querySelector(".letter-s");
 
-    /* Timeline (cinematic timing) */
-    const tl = gsap.timeline({
-        ease: "power2.inOut",
-        onComplete: () => {
-            // Enable scroll after intro
+            // Group "other" letters
+            const otherLetters = [letterN, letterF, letterA2, letterS];
+
+            /* Prepare paths for stroke animation */
+            const allPaths = introOverlay.querySelectorAll(".draw");
+            allPaths.forEach((path) => {
+                if (path) {
+                    const length = path.getTotalLength();
+                    // Set initial state via CSS styles to ensure no flicker
+                    path.style.strokeDasharray = length;
+                    path.style.strokeDashoffset = length;
+                    path.style.fillOpacity = '0'; // Ensure stroke only first
+                }
+            });
+
+            // --- INTERACTIVE HOLOGRAPHIC TILT ---
+            const tiltEffect = (e) => {
+                const x = (window.innerWidth / 2 - e.clientX) / 20;
+                const y = (window.innerHeight / 2 - e.clientY) / 20;
+
+                gsap.to(svgElement, {
+                    rotationY: x,
+                    rotationX: -y,
+                    duration: 0.5,
+                    ease: "power2.out",
+                    transformPerspective: 1000,
+                    transformOrigin: "center center"
+                });
+            };
+
+            // Add listener
+            document.addEventListener("mousemove", tiltEffect);
+
+            /* Timeline (cinematic timing) */
+            const tl = gsap.timeline({
+                ease: "power2.inOut",
+                onComplete: () => {
+                    // Cleanup
+                    document.removeEventListener("mousemove", tiltEffect);
+                    document.body.style.overflow = "";
+
+                    // Fade out and remove
+                    gsap.to(introOverlay, {
+                        opacity: 0,
+                        duration: 0.5,
+                        onComplete: () => introOverlay.remove()
+                    });
+                }
+            });
+
+            // 0. Initial Setup
+            // Ensure A1 is hidden and above
+            tl.set(letterA1, {
+                y: -150,
+                x: 44,
+                opacity: 0,
+                fillOpacity: 0
+            });
+
+            // Ensure others are hidden (fill) but prepared for stroke
+            tl.set(otherLetters, {
+                fillOpacity: 0,
+                stroke: "#ffffff" // Ensure visible stroke color
+            });
+
+            // 1. Draw "NFAS"
+            tl.to(otherLetters, {
+                strokeDashoffset: 0,
+                duration: 1.5,
+                stagger: 0.1,
+                ease: "power2.out"
+            });
+
+            // 2. 'A' Falls Down (onto N)
+            tl.to(letterA1, {
+                y: 0,
+                opacity: 1,
+                duration: 0.8,
+                ease: "bounce.out",
+                strokeDashoffset: 0
+            });
+
+            // 3. Sequential Glow (N -> F -> A -> S)
+            const flashGlow = (target) => {
+                return gsap.to(target, {
+                    fillOpacity: 1,
+                    duration: 0.1,
+                    yoyo: true,
+                    repeat: 1
+                });
+            };
+
+            tl.add(flashGlow(letterN), "+=0.1");
+            tl.add(flashGlow(letterF), "+=0.1");
+            tl.add(flashGlow(letterA2), "+=0.1");
+            tl.add(flashGlow(letterS), "+=0.1");
+
+            // 4. 'A' Slides to Start (Completing "ANFAS")
+            tl.to(letterA1, {
+                x: 0, // Move to original 0 position
+                duration: 0.8,
+                ease: "power3.inOut"
+            });
+
+            // 5. Final Full Glow -> Warp
+            tl.to([letterA1, ...otherLetters], {
+                fillOpacity: 1,
+                duration: 0.5,
+                stroke: "transparent"
+            });
+
+            // Explosive Reveal
+            tl.to(svgElement, {
+                scale: 50, // Massive scale
+                opacity: 0,
+                duration: 0.8,
+                ease: "expo.in",
+                filter: "blur(20px)"
+            }, "+=0.1");
+
+        } catch (error) {
+            console.error("Intro Animation Error:", error);
+            // Emergency cleanup
             document.body.style.overflow = "";
-            introOverlay.remove(); // Remove overlay from DOM
+            introOverlay.style.display = "none";
         }
-    });
-
-    /* 1. Draw paths (Slightly faster) */
-    tl.to(paths, {
-        strokeDashoffset: 0,
-        duration: 1.8,
-        stagger: 0.1,
-        ease: "power2.out"
-    });
-
-    /* 2. Fill Text Solid */
-    tl.to(paths, {
-        fillOpacity: 1,
-        duration: 0.5,
-        ease: "power2.in"
-    }, "-=0.5"); // Overlap slightly with drawing
-
-    /* 3. Pre-Zoom Glitch/Anticipation */
-    tl.to(".intro-overlay svg", {
-        scale: 0.9, // Pull back slightly
-        duration: 0.4,
-        ease: "back.in(1.7)",
-        filter: "drop-shadow(5px 0 0 red) drop-shadow(-5px 0 0 cyan)", // Chromatic Glitch
-        skewX: 10, // Glitch skew
-    });
-
-    /* 4. Reset Glitch quickly */
-    tl.to(".intro-overlay svg", {
-        skewX: 0,
-        filter: "none",
-        duration: 0.1
-    });
-
-    /* 5. THE ZOOM (Fly Through) */
-    tl.to(".intro-overlay svg", {
-        scale: 80, // Massive zoom
-        opacity: 0, // Fade out as we pass through
-        duration: 1.2,
-        ease: "expo.in"
-    });
-
-    /* 6. Fade out Overlay Background simultaneously */
-    tl.to(introOverlay, {
-        opacity: 0,
-        duration: 0.8,
-        ease: "power2.in",
-    }, "-=1.0"); // Start fading while zooming
-}
-
-
-
-
-
-
+    } else {
+        // Fallback if GSAP missing or element missing
+        if (introOverlay) introOverlay.style.display = "none";
+    }
+})();
 

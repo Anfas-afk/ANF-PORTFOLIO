@@ -3753,7 +3753,12 @@ svg {
     stroke-linecap: round;
     stroke-linejoin: round;
     transition: fill-opacity 0.5s ease;
-    /* Smooth fill */
+
+    /* Performance Optimizations */
+    will-change: stroke-dashoffset, fill-opacity;
+    transform: translateZ(0);
+    /* Hardware accelerate */
+    backface-visibility: hidden;
 }
 
 /* Helper for filling via JS */
