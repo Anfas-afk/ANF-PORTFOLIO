@@ -1076,6 +1076,79 @@ ul {
     }
 }
 
+@media (max-width: 768px) {
+
+    /* Stack panels vertically and fix layout */
+    .service-split-container {
+        flex-direction: column !important;
+        height: auto !important;
+        display: block !important;
+        overflow: visible !important;
+        /* Allow content to flow out if needed */
+        background: transparent !important;
+        /* Remove container bg to avoid double box look */
+        border: none !important;
+    }
+
+    .service-panel {
+        width: 100% !important;
+        flex: none !important;
+        height: auto !important;
+        /* Dynamic height */
+        min-height: 400px;
+        /* Minimum height */
+        margin-bottom: 30px;
+        /* Space between panels */
+        padding: 60px 30px !important;
+        /* More padding */
+        filter: brightness(1) !important;
+        border-radius: 32px;
+        /* Give panels their own shape */
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    /* Disable hover interactions */
+    .service-panel:hover {
+        flex: none !important;
+        transform: none !important;
+    }
+
+    /* Force Title Visibility */
+    .panel-title {
+        color: var(--white) !important;
+        transform: none !important;
+        /* Remove translateY */
+        text-shadow: 0 5px 20px rgba(255, 255, 255, 0.4) !important;
+        opacity: 1 !important;
+        margin-bottom: 20px !important;
+    }
+
+    /* Force Hidden Info Visibility */
+    .panel-hidden-info {
+        height: auto !important;
+        opacity: 1 !important;
+        transform: none !important;
+        margin-top: 0 !important;
+        visibility: visible !important;
+        display: block !important;
+    }
+
+    .panel-hidden-info p {
+        margin-bottom: 25px !important;
+    }
+
+    /* Adjust content grouping */
+    .panel-content {
+        transform: none !important;
+        padding: 0 !important;
+        position: relative !important;
+        z-index: 5 !important;
+    }
+}
+
 @media (min-width: 900px) {
     .service-split-container {
         flex-direction: row;
@@ -1405,9 +1478,7 @@ ul {
         padding-top: 0;
     }
 
-    /* Hide decorative floating assets on mobile to prevent text overlap */
-    .plate-main-pill,
-    .code-hero,
+    /* Hide decorative floating assets on mobile to prevent text overlap, BUT keep main badges */
     .plate-screen-left,
     .plate-screen-center,
     .plate-screen-right,
@@ -1415,6 +1486,43 @@ ul {
     .plate-widget-top-right,
     .code-1,
     .code-2 {
+        display: none !important;
+    }
+
+    /* Show Main Pills as Buttons on Mobile */
+    .plate-main-pill,
+    .code-hero {
+        display: flex !important;
+        opacity: 1 !important;
+        position: relative !important;
+        /* Move into flow if possible, or position specifically */
+        width: auto !important;
+        height: auto !important;
+        padding: 10px 24px !important;
+        border-radius: 50px !important;
+        transform: none !important;
+        inset: auto !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+        font-size: 0.9rem !important;
+        margin-top: 20px !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        box-shadow: none !important;
+    }
+
+    /* We need to ensure the parent .floating-assets doesn't block clicks or mess up layout */
+    .floating-assets {
+        position: static !important;
+        /* Change to static so children can flow */
+        width: auto !important;
+        height: auto !important;
+        display: flex !important;
+        justify-content: center !important;
+        perspective: none !important;
+    }
+
+    /* Hide specific children elements inside the pills if they are too complex for the button look */
+    .plate-main-pill .toggle-switch,
+    .code-hero .code-lines {
         display: none !important;
     }
 }
@@ -3594,4 +3702,61 @@ body.show-reveal .cursor-image-wrapper {
         top: 120px;
     }
 
+}
+
+/* ===============================
+   CINEMATIC INTRO ANIMATION
+   =============================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Intro Overlay Styles (Merged) */
+.intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Reusing .draw styles from previous block */
+.intro-body {
+    /* Kept for reference or removing if no longer used */
+    background: #000;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+svg {
+    width: 70%;
+}
+
+/* IMPORTANT: stroke-based animation */
+.draw {
+    fill: #ffffff;
+    fill-opacity: 0;
+    /* Hidden initially */
+    stroke: #ffffff;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: fill-opacity 0.5s ease;
+    /* Smooth fill */
+}
+
+/* Helper for filling via JS */
+.draw.filled {
+    fill-opacity: 1 !important;
 }

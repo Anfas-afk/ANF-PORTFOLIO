@@ -594,10 +594,94 @@ const serviceContainer = document.querySelector('.service-split-container');
 if (serviceContainer) {
     // User requested "touch" (click) to expand to 800px
     serviceContainer.addEventListener('click', () => {
-        // Toggle the expanded class
-        serviceContainer.classList.toggle('touch-expand');
+        // Toggle the expanded class ONLY on larger screens where layout isn't vertical
+        if (window.innerWidth > 768) {
+            serviceContainer.classList.toggle('touch-expand');
+        }
     });
 }
+
+
+
+
+/* ===============================
+   CINEMATIC INTRO ANIMATION
+   =============================== */
+
+const introOverlay = document.querySelector(".intro-overlay");
+
+if (introOverlay) {
+    // Lock scroll during intro
+    document.body.style.overflow = "hidden";
+
+    const paths = document.querySelectorAll(".draw");
+
+    /* Prepare paths for stroke animation */
+    paths.forEach((path) => {
+        const length = path.getTotalLength();
+        path.style.strokeDasharray = length;
+        path.style.strokeDashoffset = length;
+    });
+
+    /* Timeline (cinematic timing) */
+    const tl = gsap.timeline({
+        ease: "power2.inOut",
+        onComplete: () => {
+            // Enable scroll after intro
+            document.body.style.overflow = "";
+            introOverlay.remove(); // Remove overlay from DOM
+        }
+    });
+
+    /* 1. Draw paths (Slightly faster) */
+    tl.to(paths, {
+        strokeDashoffset: 0,
+        duration: 1.8,
+        stagger: 0.1,
+        ease: "power2.out"
+    });
+
+    /* 2. Fill Text Solid */
+    tl.to(paths, {
+        fillOpacity: 1,
+        duration: 0.5,
+        ease: "power2.in"
+    }, "-=0.5"); // Overlap slightly with drawing
+
+    /* 3. Pre-Zoom Glitch/Anticipation */
+    tl.to(".intro-overlay svg", {
+        scale: 0.9, // Pull back slightly
+        duration: 0.4,
+        ease: "back.in(1.7)",
+        filter: "drop-shadow(5px 0 0 red) drop-shadow(-5px 0 0 cyan)", // Chromatic Glitch
+        skewX: 10, // Glitch skew
+    });
+
+    /* 4. Reset Glitch quickly */
+    tl.to(".intro-overlay svg", {
+        skewX: 0,
+        filter: "none",
+        duration: 0.1
+    });
+
+    /* 5. THE ZOOM (Fly Through) */
+    tl.to(".intro-overlay svg", {
+        scale: 80, // Massive zoom
+        opacity: 0, // Fade out as we pass through
+        duration: 1.2,
+        ease: "expo.in"
+    });
+
+    /* 6. Fade out Overlay Background simultaneously */
+    tl.to(introOverlay, {
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.in",
+    }, "-=1.0"); // Start fading while zooming
+}
+
+
+
 
 
 
