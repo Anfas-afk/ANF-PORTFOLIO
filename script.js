@@ -548,6 +548,16 @@ if (serviceContainer) {
             try {
                 const svgElement = introOverlay.querySelector("svg");
 
+                // Check if intro has already played this session
+                if (sessionStorage.getItem('introPlayed')) {
+                    if (introOverlay) introOverlay.style.display = 'none';
+                    document.body.style.overflow = ""; // Ensure scroll is unlocked
+                    return;
+                }
+
+                // Mark as played
+                sessionStorage.setItem('introPlayed', 'true');
+
                 // Select letters individually
                 const letterA1 = introOverlay.querySelector(".letter-a1");
                 const letterN = introOverlay.querySelector(".letter-n");

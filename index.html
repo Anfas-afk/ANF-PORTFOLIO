@@ -10,6 +10,23 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
 
+    <!-- Instant Intro Skip to prevent FOUC -->
+    <script>
+        if (sessionStorage.getItem('introPlayed') === 'true') {
+            document.documentElement.classList.add('skip-intro');
+        }
+    </script>
+    <style>
+        .skip-intro .intro-overlay {
+            display: none !important;
+            visibility: hidden !important;
+            z-index: -9999 !important;
+        }
+
+        .skip-intro body {
+            overflow: auto !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -110,17 +127,19 @@
                         <div class="hero-visual-frame">
                             <div class="frame-decor"></div>
                             <div class="image-mask">
-                                <img src="Assets/857.jpg" alt="Anfas - Digital Designer" class="hero-img">
+                                <img src="Assets/hero_premium.png" alt="Anfas - Digital Designer" class="hero-img">
                             </div>
                             <!-- Floating Glass Cards -->
-                            <div class="glass-floater f-1">
+                            <div class="glass-floater f-1" data-tooltip="Figma, Wireframing">
                                 <i data-lucide="palette"></i>
                                 <span>Design</span>
                             </div>
-                            <div class="glass-floater f-2">
+                            <div class="glass-floater f-2" data-tooltip="React, CSS, JS">
                                 <i data-lucide="code-2"></i>
                                 <span>Code</span>
                             </div>
+                            <p class="hero-tagline">Designing user-focused interfaces & building performant web
+                                experiences</p>
                         </div>
 
                         <!-- Right Info Block -->
@@ -204,14 +223,15 @@
                             </div>
                             <div class="card-body">
                                 <pre><code>
-<span class="keyword">class</span> <span class="class-name">Anfas</span> {
-  <span class="keyword">constructor</span>() {
-    <span class="keyword">this</span>.role = [<span class="string">'UI/UX Designer'</span>,<br> <span class="string">'Frontend Developer'</span>];
-    <span class="keyword">this</span>.location = <span class="string">'India | Open to Remote'</span>;
-  }
-
-  <span class="function">createMagic</span>() {
-    <span class="keyword">return</span> <span class="string">'Clean UI, Soild Code'</span>;
+<span class="keyword">const</span> <span class="class-name">Anfas</span> = {
+  <span class="property">role</span>: <span class="string">'Creative Developer'</span>,
+  <span class="property">skills</span>: [
+    <span class="string">'UI/UX Design'</span>,
+    <span class="string">'Frontend Dev'</span>,
+    <span class="string">'Motion Graphics'</span>
+  ],
+  <span class="function">createMagic</span>: <span class="keyword">function</span>() {
+    <span class="keyword">return</span> <span class="string">'Stunning Experiences'</span>;
   }
 }
                                 </code></pre>
@@ -220,27 +240,27 @@
                     </div>
                     <div class="about-content">
                         <span class="section-subtitle">ABOUT ME</span>
-                        <h2>I'm a Professional UI/UX Designer and Front-end Developer Based in India</h2>
+                        <h2>Designing User-Focused Interfaces & Performant Web Experiences</h2>
                         <p>Over the past years, I have worked with multiple clients and companies globally to create
                             professional website designs and front-end development solutions.</p>
                         <p>My aim is to deliver excellence in design that aligns with your brand and is easy for users
                             to
                             interact with.</p>
-                        <a href="./Assets/MOHAMMED-ANFAS-CV.pdf" class="btn btn-primary">Download CV</a>
+                        <a href="./Assets/MOHAMMED-ANFAS-CV.pdf" class="btn btn-primary">Download CV · PDF</a>
                     </div>
                 </div>
                 <div class="container stats-grid">
                     <div class="stat-card reveal-on-scroll">
-                        <h3><span class="stat-number" data-target="01">0</span><span>+</span></h3>
-                        <p>Years of experience</p>
+                        <h3 class="stat-text">Hands-on</h3>
+                        <p>Industry Experience</p>
                     </div>
                     <div class="stat-card reveal-on-scroll">
                         <h3><span class="stat-number" data-target="20">0</span><span>+</span></h3>
                         <p>Projects completed</p>
                     </div>
                     <div class="stat-card reveal-on-scroll">
-                        <h3><span class="stat-number" data-target="98">0</span><span>%</span></h3>
-                        <p>Clients satisfaction</p>
+                        <h3><span class="stat-number" data-target="100">0</span><span>%</span></h3>
+                        <p>Client satisfaction<br><span class="stat-note">Based on feedback</span></p>
                     </div>
                 </div>
             </section>
@@ -285,8 +305,8 @@
                                 <div class="ui-plate plate-screen-right">
                                     <div class="circle-icon"></div>
                                 </div>
-                                <div class="ui-plate plate-widget-top-left"><i data-lucide="bell"></i></div>
-                                <div class="ui-plate plate-widget-top-right"><i data-lucide="menu"></i></div>
+                                <div class="ui-plate plate-widget-top-left"><i data-lucide="pen-tool"></i></div>
+                                <div class="ui-plate plate-widget-top-right"><i data-lucide="layers"></i></div>
                             </div>
                         </div>
 
