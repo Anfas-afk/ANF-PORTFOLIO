@@ -379,27 +379,10 @@ statNumbers.forEach(number => {
     statObserver.observe(number);
 });
 
-// --------------------------------------------------------------------------
-// FOOTER: CLOCK & ACTIONS
-// --------------------------------------------------------------------------
 
-// 1. Live Time Widget
-const updateTime = () => {
-    const timeDisplay = document.getElementById('localTime');
-    if (timeDisplay) {
-        const now = new Date();
-        const timeString = now.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false,
-            timeZone: 'Asia/Kolkata' // IST for Anfas
-        });
-        timeDisplay.innerText = `${timeString} IST`;
-    }
-};
 
-setInterval(updateTime, 1000);
-updateTime(); // Initial call
+
+
 
 // 2. Magnetic Social Planets
 const socialPlanets = document.querySelectorAll('.social-planet');
@@ -427,27 +410,18 @@ if (socialPlanets.length > 0) {
 }
 
 
-// --------------------------------------------------------------------------
-// UNDERWORLD REVEAL FOOTER LOGIC
-// --------------------------------------------------------------------------
-const adjustFooterSpacer = () => {
-    const footer = document.querySelector('.footer-premium');
-    const wrapper = document.querySelector('.content-wrapper');
 
-    if (footer && wrapper) {
-        const footerHeight = footer.offsetHeight;
-        wrapper.style.marginBottom = `${footerHeight}px`;
-    }
-};
-
-window.addEventListener('load', adjustFooterSpacer);
-window.addEventListener('resize', adjustFooterSpacer);
-// Also trigger after a short delay to account for any lateloading images
-setTimeout(adjustFooterSpacer, 500);
 
 
 // --------------------------------------------------------------------------
+
 // --------------------------------------------------------------------------
+// --------------------------------------------------------------------------
+// --------------------------------------------------------------------------
+// --------------------------------------------------------------------------
+
+
+
 // --------------------------------------------------------------------------
 // CHROMATIC RIPPLE INTERACTIONS
 // --------------------------------------------------------------------------
