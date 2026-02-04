@@ -3846,10 +3846,7 @@ body.show-reveal .cursor-image-wrapper {
     position: absolute;
     border-radius: 50%;
     filter: blur(80px);
-    opacity: 0.5;
-    /* Slightly reduced to avoid muddiness */
-    mix-blend-mode: multiply;
-    /* Ensure colors blend nicely on white */
+    opacity: 0.6;
     /* Increased opacity for light mode visibility */
 }
 
@@ -3919,8 +3916,8 @@ body.show-reveal .cursor-image-wrapper {
     line-height: 0.9;
     letter-spacing: -0.02em;
     color: transparent;
-    background: linear-gradient(135deg, #000000 0%, #333333 100%);
-    /* Stronger dark gradient */
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+    /* Dark gradient for light theme */
     -webkit-background-clip: text;
     background-clip: text;
     margin: 0;
@@ -3930,12 +3927,11 @@ body.show-reveal .cursor-image-wrapper {
 
 .text-outline {
     background: none;
-    -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.8);
-    /* Much stronger stroke */
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.2);
     /* Dark Stroke for light theme */
     color: transparent;
-    opacity: 0.8;
-    /* High opacity for visibility */
+    opacity: 0.45;
+    /* Increased by 0.05 */
 }
 
 /* 3. Frosted Glass Dock */
@@ -3950,15 +3946,14 @@ body.show-reveal .cursor-image-wrapper {
     align-items: center;
     gap: 15px;
     padding: 12px;
-    background: rgba(255, 255, 255, 0.85);
-    /* More opaque */
+    background: rgba(255, 255, 255, 0.7);
     /* Lighter glass */
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     /* Darker border */
     border-radius: 100px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
     /* Softer shadow */
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -4257,4 +4252,393 @@ svg {
 /* Helper for filling via JS */
 .draw.filled {
     fill-opacity: 1 !important;
+}
+
+/ *   M o d e r n   G r i d   F o o t e r   S t y l e s   * /     
+/* Footer Modern Layout */
+.footer-modern {
+    background: transparent;
+    padding: 100px 0 40px;
+    color: var(--text-primary);
+    position: relative;
+    z-index: 10;
+    border-top: 1px solid var(--border-light);
+}
+
+.footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.5fr;
+    gap: 40px;
+    margin-bottom: 80px;
+}
+
+.footer-col h2.footer-logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.footer-desc {
+    max-width: 300px;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.footer-col h4 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 25px;
+    color: var(--text-muted);
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: var(--text-primary);
+}
+
+.footer-btn {
+    margin-top: 15px;
+    width: auto;
+    display: inline-flex;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 40px;
+    border-top: 1px solid var(--border-light);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.footer-meta {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.back-to-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+}
+
+.back-to-top:hover {
+    color: var(--text-primary);
+}
+
+.back-to-top i {
+    width: 16px;
+    height: 16px;
+}
+
+/* Responsive Footer */
+@media (max-width: 1024px) {
+    .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 60px 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-top {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+
+    .brand-col {
+        order: -1;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+}
+
+
+/* ===============================
+   DARK LUXURY FOOTER
+   =============================== */
+
+.footer-luxury {
+    background-color: #050505;
+    color: #A1A1AA;
+    /* Muted gray text */
+    padding: 80px 20px 40px;
+    border-radius: 40px 40px 0 0;
+    position: relative;
+    overflow: hidden;
+    margin-top: 0;
+    z-index: 10;
+    font-family: 'Inter', sans-serif;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Texture Overlay */
+.footer-grain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Ambient Glow Accent */
+.footer-glow {
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+    filter: blur(80px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.footer-grid-luxury {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 40px;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 80px;
+}
+
+/* Brand Column */
+.footer-logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+}
+
+.footer-tagline {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #71717A;
+    max-width: 250px;
+}
+
+/* Headings */
+.footer-luxury h4 {
+    color: #FFFFFF;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.9;
+}
+
+/* Links List */
+.footer-luxury ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-luxury ul li {
+    margin-bottom: 12px;
+}
+
+.footer-luxury ul li a {
+    color: #A1A1AA;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.footer-luxury ul li a:hover {
+    color: #FFFFFF;
+    transform: translateX(4px);
+}
+
+/* Service List (Static text style) */
+.footer-col-services ul li {
+    color: #71717A;
+    cursor: default;
+    transition: all 0.3s ease;
+    /* added transition */
+}
+
+.footer-col-services ul li:hover {
+    color: #FFFFFF;
+    /* added hover color */
+    transform: translateX(4px);
+    /* added hover slide */
+}
+
+/* Connect Column */
+.footer-link-highlight {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #FFFFFF;
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    width: fit-content;
+    white-space: nowrap;
+    /* Fix wrapping */
+}
+
+.footer-link-highlight i {
+    width: 18px;
+    height: 18px;
+    color: #818cf8;
+    /* Soft Indigo */
+    transition: all 0.3s ease;
+}
+
+.footer-link-highlight:hover {
+    color: #818cf8;
+    /* Changed hover style: Text becomes indigo */
+    opacity: 1;
+    /* Reset opacity */
+}
+
+.footer-link-highlight:hover i {
+    transform: translateX(4px);
+    /* Slide icon instead of scale */
+    filter: none;
+    /* Remove glow */
+    color: #FFFFFF;
+    /* Icon becomes white */
+}
+
+/* Social Icons Row */
+.footer-social-row {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.footer-social-row a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    color: #A1A1AA;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-social-row a:hover {
+    background: #FFFFFF;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+}
+
+/* Bottom Bar */
+.footer-bottom-luxury {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #52525B;
+    position: relative;
+    z-index: 2;
+}
+
+.footer-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #A1A1AA;
+}
+
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.5;
+        transform: scale(1.2);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #22c55e;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #22c55e;
+    animation: blink 2s infinite ease-in-out;
+    /* Added blinking */
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .footer-grid-luxury {
+        grid-template-columns: 1fr 1fr;
+        gap: 60px 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-luxury {
+        border-radius: 24px 24px 0 0;
+        padding: 60px 20px 30px;
+    }
+
+    .footer-grid-luxury {
+        grid-template-columns: 1fr;
+        gap: 50px;
+        margin-bottom: 50px;
+    }
+
+    .footer-bottom-luxury {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
 }
