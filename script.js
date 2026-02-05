@@ -719,49 +719,88 @@ if (faqItems.length > 0) {
     });
 }
 
-/* ===============================
-   CTA MAGNETIC BUTTON LOGIC
-   =============================== */
-const ctaBtn = document.querySelector('.btn-cta-magnetic');
 
-if (ctaBtn) {
-    ctaBtn.addEventListener('mousemove', function (e) {
-        const rect = ctaBtn.getBoundingClientRect();
+/* ===============================
+   HOLOGRAPHIC TICKET TILT LOGIC
+   =============================== */
+const ticketContainer = document.querySelector('.holo-ticket-container');
+const ticketGlass = document.querySelector('.ticket-glass');
+
+if (ticketContainer && ticketGlass) {
+    ticketContainer.addEventListener('mousemove', (e) => {
+        const rect = ticketContainer.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        // Calculate distance from center
+        // Calculate rotation (max +/- 15 deg)
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
 
-        // Strength of magnetic pull
-        const strength = 0.4;
+        const rotateX = ((y - centerY) / centerY) * -15; // Invert Y axis
+        const rotateY = ((x - centerX) / centerX) * 15;
 
-        const moveX = (x - centerX) * strength;
-        const moveY = (y - centerY) * strength;
+        // Apply transform
+        ticketGlass.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
-        // Move the button container
-        this.style.transform = `translate(${moveX}px, ${moveY}px)`;
-
-        // Move the fill layer slightly differently for depth (Parallax)
-        const fill = this.querySelector('.btn-fill');
-        if (fill) {
-            fill.style.transform = `translate(${moveX * 0.2}px, ${moveY * 0.2}px) scale(1.5)`; // Keep scale if hovered
+        // Adjust Shine Position
+        const shine = ticketGlass.querySelector('.ticket-shine');
+        if (shine) {
+            // dynamic gradient adjustment could go here for advanced effect
         }
     });
 
-    ctaBtn.addEventListener('mouseleave', function () {
-        this.style.transform = 'translate(0, 0)';
-        const fill = this.querySelector('.btn-fill');
-        if (fill) {
-            fill.style.transform = `scale(0)`; // Reset scale
-        }
-    });
-
-    ctaBtn.addEventListener('mouseenter', function () {
-        const fill = this.querySelector('.btn-fill');
-        if (fill) {
-            fill.style.transform = `scale(1.5)`;
-        }
+    ticketContainer.addEventListener('mouseleave', () => {
+        // Reset position smoothly
+        ticketGlass.style.transform = `rotateX(0deg) rotateY(0deg)`;
     });
 }
+
+/* ===============================
+   CLEAN CARD FAQ LOGIC
+   =============================== */
+const ccItems = document.querySelectorAll('.cc-item');
+
+if (ccItems.length > 0) {
+    ccItems.forEach(item => {
+        const header = item.querySelector('.cc-header');
+        const body = item.querySelector('.cc-body');
+        const icon = item.querySelector('.cc-icon i');
+
+        if (header) {
+            header.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+
+                // Close all others
+                ccItems.forEach(other => {
+                    if (other !== item) {
+                        other.classList.remove('active');
+                        other.querySelector('.cc-body').style.height = 0;
+                        const otherIcon = other.querySelector('.cc-icon i');
+                        if (otherIcon) otherIcon.setAttribute('data-lucide', 'chevron-down');
+                    }
+                });
+
+                // Toggle current
+                item.classList.toggle('active');
+
+                if (!isActive) {
+                    body.style.height = body.scrollHeight + 'px';
+                    if (icon) icon.setAttribute('data-lucide', 'chevron-up');
+                } else {
+                    body.style.height = 0;
+                    if (icon) icon.setAttribute('data-lucide', 'chevron-down');
+                }
+
+                // Re-init lucide icons to update chevron direction
+                lucide.createIcons();
+            });
+        }
+    });
+
+    // Ensure icon consistency on load
+    lucide.createIcons();
+}
+
+
+
+
