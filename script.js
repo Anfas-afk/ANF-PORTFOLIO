@@ -682,3 +682,86 @@ if (serviceContainer) {
     }
 })();
 
+
+/* ===============================
+   FAQ ACCORDION LOGIC
+   =============================== */
+const faqItems = document.querySelectorAll('.faq-item');
+
+if (faqItems.length > 0) {
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+
+        if (question && answer) {
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+
+                // Close all other items (Exclusive Accordion)
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                        otherItem.querySelector('.faq-answer').style.height = '0';
+                    }
+                });
+
+                // Toggle current item
+                if (isActive) {
+                    item.classList.remove('active');
+                    answer.style.height = '0';
+                } else {
+                    item.classList.add('active');
+                    // Reset height to auto to get correct scrollHeight, then animate
+                    answer.style.height = answer.scrollHeight + 'px';
+                }
+            });
+        }
+    });
+}
+
+/* ===============================
+   CTA MAGNETIC BUTTON LOGIC
+   =============================== */
+const ctaBtn = document.querySelector('.btn-cta-magnetic');
+
+if (ctaBtn) {
+    ctaBtn.addEventListener('mousemove', function (e) {
+        const rect = ctaBtn.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Calculate distance from center
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        // Strength of magnetic pull
+        const strength = 0.4;
+
+        const moveX = (x - centerX) * strength;
+        const moveY = (y - centerY) * strength;
+
+        // Move the button container
+        this.style.transform = `translate(${moveX}px, ${moveY}px)`;
+
+        // Move the fill layer slightly differently for depth (Parallax)
+        const fill = this.querySelector('.btn-fill');
+        if (fill) {
+            fill.style.transform = `translate(${moveX * 0.2}px, ${moveY * 0.2}px) scale(1.5)`; // Keep scale if hovered
+        }
+    });
+
+    ctaBtn.addEventListener('mouseleave', function () {
+        this.style.transform = 'translate(0, 0)';
+        const fill = this.querySelector('.btn-fill');
+        if (fill) {
+            fill.style.transform = `scale(0)`; // Reset scale
+        }
+    });
+
+    ctaBtn.addEventListener('mouseenter', function () {
+        const fill = this.querySelector('.btn-fill');
+        if (fill) {
+            fill.style.transform = `scale(1.5)`;
+        }
+    });
+}
