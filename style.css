@@ -239,39 +239,25 @@ body::before {
         radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08), transparent 25%),
         radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.08), transparent 25%),
         radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.03), transparent 50%);
-    filter: blur(60px);
     z-index: -2;
     pointer-events: none;
-    animation: bgPulse 15s ease-in-out infinite alternate;
+    /* Static background is better for performance */
+    transform: translateZ(0);
+    /* Force GPU layer */
 }
 
-@keyframes bgPulse {
-    0% {
-        transform: scale(1);
-        opacity: 0.8;
-    }
-
-    100% {
-        transform: scale(1.1);
-        opacity: 1;
-    }
-}
-
-/* Grain Overlay - Made subtler for light theme */
+/* Grain Overlay - Subtler and optimized */
 .grain-overlay {
     position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-    opacity: 0.35;
-    /* Increased slightly for texture on light */
+    opacity: 0.2;
     pointer-events: none;
     z-index: 9998;
-    mix-blend-mode: multiply;
-    /* Better for light backgrounds */
-    animation: grain 8s steps(10) infinite;
+    will-change: transform;
 }
 
 @keyframes grain {
@@ -397,26 +383,15 @@ ul {
     padding: 30px 0;
     pointer-events: none;
     /* Let clicks pass through empty space */
-    transition: padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     background: transparent;
     border: none;
     box-shadow: none;
-    backdrop-filter: none;
 }
 
 .header.sticky {
-    padding: 20px 0;
-    /* Shrink padding instead of moving top */
-    /* Remove visual styles from wrapper */
-    background: transparent;
-    box-shadow: none;
-    backdrop-filter: none;
-    border: none;
-    width: 100%;
-    /* Keep wrapper full width */
-    left: 0;
-    transform: none;
-    border-radius: 0;
+    transform: translateY(0);
+    /* No padding resize on sticky */
 }
 
 /* Apply Pill Styles to Content Container */
@@ -6309,7 +6284,8 @@ svg {
 
 .sf-item {
     border-bottom: 1px solid var(--border-light);
-    transition: all 0.4s ease;
+    border-left: 0px solid transparent;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .sf-item:first-child {
@@ -6333,7 +6309,8 @@ svg {
     color: var(--accent-primary);
     font-family: 'Inter', monospace;
     width: 60px;
-    opacity: 0.6;
+    opacity: 0.8;
+    /* Boosted visibility */
     transition: opacity 0.3s ease;
 }
 
@@ -6359,14 +6336,16 @@ svg {
 
 .sf-icon .line-h {
     width: 100%;
-    height: 2px;
+    height: 2.5px;
+    /* Slightly thicker for definition */
     top: 50%;
     left: 0;
     transform: translateY(-50%);
 }
 
 .sf-icon .line-v {
-    width: 2px;
+    width: 2.5px;
+    /* Slightly thicker for definition */
     height: 100%;
     left: 50%;
     top: 0;
@@ -6374,6 +6353,14 @@ svg {
 }
 
 /* Active State Styles */
+.sf-item.active {
+    border-left: 4px solid var(--accent-primary);
+    border-bottom-color: var(--border-hover);
+    /* Subtle divider darkening */
+    background: rgba(255, 255, 255, 0.3);
+    /* Very subtle tint for depth */
+}
+
 .sf-item.active .sf-num {
     opacity: 1;
 }
@@ -6381,6 +6368,8 @@ svg {
 .sf-item.active .sf-title {
     color: var(--accent-primary);
     transform: translateX(10px);
+    font-weight: 700;
+    /* Clearer emphasis */
 }
 
 .sf-item.active .sf-icon .line-v {

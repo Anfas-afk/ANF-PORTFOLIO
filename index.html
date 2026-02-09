@@ -6,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anfas - Portfolio</title>
     <link rel="stylesheet" href="style.css?v=1.4">
-    <!-- Lucide Icons (CDN) -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
 
     <!-- Instant Intro Skip to prevent FOUC -->
     <script>
@@ -310,7 +307,7 @@
                             <div class="project-card" data-index="0">
                                 <div class="project-visual">
                                     <img src="./Assets/Change_the_background_of__subject_1__to_a_cozy_cafe_setting_with_warm_lighting_.png"
-                                        alt="Mijuby">
+                                        alt="Mijuby" loading="lazy" decoding="async">
                                     <div class="visual-overlay"></div>
                                 </div>
                                 <div class="project-content">
@@ -333,7 +330,8 @@
                         <div class="card-wrapper sticky-card">
                             <div class="project-card" data-index="1">
                                 <div class="project-visual">
-                                    <img src="./Assets/ChatGPT Image Jan 21, 2026, 04_15_42 PM.png" alt="Verto">
+                                    <img src="./Assets/ChatGPT Image Jan 21, 2026, 04_15_42 PM.png" alt="Verto"
+                                        loading="lazy" decoding="async">
                                     <div class="visual-overlay"></div>
                                 </div>
                                 <div class="project-content">
@@ -591,6 +589,9 @@
 
     <!-- Lenis Smooth Scroll -->
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <!-- Moved scripts for performance -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
     <script src="script.js"></script>
 </body>
 
