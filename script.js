@@ -433,3 +433,46 @@ document.querySelectorAll('.sf-item.active, .faq-item.active, .cc-item.active').
 
 
 
+
+// --------------------------------------------------------------------------
+// CONTACT FORM LOGIC (Restored)
+// --------------------------------------------------------------------------
+const contactForm = document.getElementById('contactForm');
+const formStatus = document.getElementById('formStatus');
+
+if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('subject').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        if (!name || !email || !message) {
+            formStatus.innerText = 'Please fill in all required fields.';
+            formStatus.className = 'form-status error';
+            return;
+        }
+
+        const whatsappNumber = '918590468094';
+
+        const text =
+            `Hello Anfas,%0A%0A` +
+            `Name: ${name}%0A` +
+            `Email: ${email}%0A` +
+            (subject ? `Subject: ${subject}%0A` : '') +
+            `Message: ${message}`;
+
+        const whatsappURL = `https://wa.me/${whatsappNumber}?text=${text}`;
+
+        formStatus.innerText = 'Redirecting to WhatsApp...';
+        formStatus.className = 'form-status success';
+
+        setTimeout(() => {
+            window.open(whatsappURL, '_blank');
+            contactForm.reset();
+            formStatus.innerText = '';
+        }, 1500);
+    });
+}
