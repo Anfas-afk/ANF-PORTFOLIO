@@ -52,24 +52,47 @@ const header = document.querySelector('.header');
 const navLinks = document.querySelectorAll('.nav-menu a');
 const sections = document.querySelectorAll('section[id]');
 
+// --------------------------------------------------------------------------
+// OPTIMIZED SCROLL HANDLER (Fixes Lag)
+// --------------------------------------------------------------------------
+let lastKnownScrollPosition = 0;
+let ticking = false;
+
 window.addEventListener('scroll', () => {
-    // Sticky Toggle
-    if (window.scrollY > 150) {
+    lastKnownScrollPosition = window.scrollY;
+
+    if (!ticking) {
+        window.requestAnimationFrame(() => {
+            handleScroll(lastKnownScrollPosition);
+            ticking = false;
+        });
+
+        ticking = true;
+    }
+});
+
+function handleScroll(scrollPos) {
+    // 1. Sticky Header Toggle (Lightweight)
+    if (scrollPos > 150) {
         header.classList.add('sticky');
     } else {
         header.classList.remove('sticky');
     }
 
-    // Active Link Highlighting (only on home page)
+    // 2. Active Link Highlighting (Heavier - only run if needed)
+    // Optimization: potentially only run this every few frames or check less frequently
+    // For now, rAF is enough to stop the "jank"
     if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
         let current = "";
-        sections.forEach((section) => {
+
+        // Use standard loop for performance
+        for (const section of sections) {
             const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (pageYOffset >= sectionTop - 200) {
+            // Buffer to trigger early
+            if (scrollPos >= sectionTop - 250) {
                 current = section.getAttribute("id");
             }
-        });
+        }
 
         navLinks.forEach((link) => {
             link.classList.remove("active");
@@ -79,7 +102,7 @@ window.addEventListener('scroll', () => {
             }
         });
     }
-});
+}
 
 // Smooth Scroll for links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -140,9 +163,81 @@ if (contactForm) {
 }
 
 
+
 // --------------------------------------------------------------------------
-// STICKY 3D STACK ANIMATION & HOLOGRAPHIC GLARE
+// PREMIUM FOOTER INTERACTION (Parallax & Magnetic)
 // --------------------------------------------------------------------------
+
+// 1. Footer Parallax Text
+const footer = document.querySelector('.footer-premium-studio');
+const parallaxText = document.querySelector('.footer-parallax-text span');
+
+if (footer && parallaxText) {
+    window.addEventListener('scroll', () => {
+        const rect = footer.getBoundingClientRect();
+        const viewHeight = window.innerHeight;
+
+        // Start parallax when footer enters viewport
+        if (rect.top <= viewHeight && rect.bottom >= 0) {
+            // Calculate progress (0 when top enters, 1 when bottom leaves)
+            const distance = viewHeight - rect.top;
+            const percentage = distance / (viewHeight + rect.height);
+
+            // Move text slower than scroll (Parallax)
+            // Range: -100px to 100px
+            const moveY = (percentage - 0.5) * 200;
+            parallaxText.style.transform = `translateY(${moveY}px)`;
+        }
+    });
+}
+
+// 2. Magnetic Button Effect
+const magneticBtn = document.querySelector('.magnetic-btn');
+
+if (magneticBtn) {
+    magneticBtn.addEventListener('mousemove', (e) => {
+        const rect = magneticBtn.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        // Calculate distance from center
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const deltaX = (x - centerX) * 0.4; // Magnetic strength
+        const deltaY = (y - centerY) * 0.4;
+
+        // Move button
+        magneticBtn.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+
+        // Move icon slightly more (parallax inside button)
+        const icon = magneticBtn.querySelector('.btn-icon');
+        if (icon) {
+            icon.style.transform = `translate(${deltaX * 0.5}px, ${deltaY * 0.5}px)`;
+        }
+    });
+
+    magneticBtn.addEventListener('mouseleave', () => {
+        // Reset
+        magneticBtn.style.transform = 'translate(0, 0)';
+        const icon = magneticBtn.querySelector('.btn-icon');
+        if (icon) {
+            icon.style.transform = 'translate(0, 0)';
+        }
+    });
+}
+
+// 3. Back To Top
+const backToTop = document.getElementById('backToTop');
+if (backToTop) {
+    backToTop.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
 
 const stackArea = document.querySelector('.stack-area');
 const cards = document.querySelectorAll('.card-wrapper');
@@ -799,6 +894,53 @@ if (ccItems.length > 0) {
 
     // Ensure icon consistency on load
     lucide.createIcons();
+}
+
+/* ===============================
+   STUDIO FAQ ACCORDION LOGIC
+   =============================== */
+const studioFaqItems = document.querySelectorAll('.sf-item');
+
+if (studioFaqItems.length > 0) {
+    studioFaqItems.forEach(item => {
+        const header = item.querySelector('.sf-header');
+        const body = item.querySelector('.sf-body');
+
+        if (header) {
+            header.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+
+                // Close all other items
+                studioFaqItems.forEach(other => {
+                    if (other !== item && other.classList.contains('active')) {
+                        other.classList.remove('active');
+                        other.querySelector('.sf-body').style.height = 0;
+                    }
+                });
+
+                // Toggle current item
+                item.classList.toggle('active');
+
+                if (!isActive) {
+                    body.style.height = body.scrollHeight + 'px';
+                } else {
+                    body.style.height = 0;
+                }
+            });
+        }
+    });
+
+    // Ensure the initially active item has its height set
+    const activeItem = document.querySelector('.sf-item.active');
+    if (activeItem) {
+        const activeBody = activeItem.querySelector('.sf-body');
+        if (activeBody) {
+            // Need a slight delay to ensure scrollHeight is calculated correctly after styles load
+            setTimeout(() => {
+                activeBody.style.height = activeBody.scrollHeight + 'px';
+            }, 500);
+        }
+    }
 }
 
 
