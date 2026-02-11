@@ -106,7 +106,8 @@ body {
 .content-wrapper {
     position: relative;
     z-index: 50;
-    background: transparent;
+    background: #F2F0EF;
+    /* Hardcoded to ensure visibility */
     width: 100%;
     min-height: 100vh;
     /* Ensure it covers screen */
