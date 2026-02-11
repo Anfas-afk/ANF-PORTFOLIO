@@ -430,6 +430,154 @@ document.querySelectorAll('.sf-item.active, .faq-item.active, .cc-item.active').
     }
 });
 
+// Prism Aura Contact Interactivity (Blow-Away Redesign)
+const setupContactInteractions = () => {
+    if (OptimizationManager.reducedMotion) return;
 
+    const prismSection = document.querySelector('.contact-prism');
+    const prismCard = document.querySelector('.prism-card');
+    const blobs = document.querySelectorAll('.aura-blob');
+    const spheres = document.querySelectorAll('.prism-sphere');
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
 
+    if (!prismSection) return;
 
+    // 1. Deep Parallax & 3D Tilt
+    window.addEventListener('mousemove', (e) => {
+        const rect = prismSection.getBoundingClientRect();
+        if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const mouseX = e.clientX - centerX;
+            const mouseY = e.clientY - centerY;
+
+            // Background Aura Parallax (Very Slow)
+            blobs.forEach((blob, index) => {
+                const speed = (index + 1) * 0.01;
+                gsap.to(blob, {
+                    x: mouseX * speed,
+                    y: mouseY * speed,
+                    duration: 2,
+                    ease: "power2.out"
+                });
+            });
+
+            // Decor Spheres Parallax (Fast)
+            spheres.forEach((sphere, index) => {
+                const speed = (index + 1) * 0.05;
+                gsap.to(sphere, {
+                    x: mouseX * speed,
+                    y: mouseY * speed,
+                    duration: 1,
+                    ease: "power3.out"
+                });
+            });
+
+            // 3D Tilt for Central Card
+            if (prismCard) {
+                const rotateX = (mouseY / (window.innerHeight / 2)) * -5; // Max 5deg
+                const rotateY = (mouseX / (window.innerWidth / 2)) * 5;  // Max 5deg
+
+                gsap.to(prismCard, {
+                    rotateX: rotateX,
+                    rotateY: rotateY,
+                    duration: 1,
+                    ease: "power2.out",
+                    transformPerspective: 1000
+                });
+            }
+        }
+    }, { passive: true });
+
+    // 2. Entrance Reveal (GSAP)
+    if (typeof gsap !== 'undefined') {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".contact-prism",
+                start: "top 75%",
+            }
+        });
+
+        tl.from(".prism-card", {
+            opacity: 0,
+            y: 100,
+            scale: 0.9,
+            duration: 1.5,
+            ease: "expo.out"
+        })
+            .from(".prism-tag", {
+                opacity: 0,
+                y: 20,
+                duration: 0.8,
+                ease: "power2.out"
+            }, "-=0.8")
+            .from(".prism-title", {
+                opacity: 0,
+                y: 30,
+                duration: 1,
+                ease: "power3.out"
+            }, "-=0.6")
+            .from(".p-field", {
+                opacity: 0,
+                x: 20,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: "power2.out"
+            }, "-=0.8");
+    }
+
+    // 3. Form Transmission (WhatsApp)
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            const whatsappNumber = '918590468094';
+            const text = encodeURIComponent(
+                `Aura Connection Request:\n\n` +
+                `Name: ${name}\n` +
+                `Email: ${email}\n` +
+                (subject ? `Subject: ${subject}\n` : '') +
+                `Message: ${message}`
+            );
+
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${text}`;
+
+            if (formStatus) {
+                formStatus.innerText = 'Synchronizing with Prism Aura...';
+                formStatus.style.opacity = '1';
+                formStatus.style.color = 'var(--accent-primary)';
+            }
+
+            const btn = contactForm.querySelector('.prism-submit-btn');
+            if (btn) {
+                btn.classList.add('sending');
+                btn.innerHTML = '<span>SYNCHRONIZING...</span><i data-lucide="loader"></i>';
+                lucide.createIcons();
+            }
+
+            setTimeout(() => {
+                window.open(whatsappURL, '_blank');
+                contactForm.reset();
+                if (formStatus) {
+                    formStatus.innerText = 'Sync Complete. Portal Opening...';
+                    setTimeout(() => { formStatus.style.opacity = '0'; }, 3000);
+                }
+                if (btn) {
+                    btn.classList.remove('sending');
+                    btn.innerHTML = '<span>INITIATE CONNECTION</span><i data-lucide="sparkles"></i>';
+                    lucide.createIcons();
+                }
+            }, 1500);
+        });
+    }
+};
+
+// Initialize Prism Contact Interactions
+if (document.readyState === 'complete') setupContactInteractions();
+else window.addEventListener('load', setupContactInteractions);
