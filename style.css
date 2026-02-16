@@ -371,7 +371,7 @@ ul {
 /* Header Styles */
 /* Header Styles */
 .header {
-    position: fixed;
+
     top: 0;
     left: 0;
     right: 0;
@@ -495,13 +495,11 @@ ul {
 .nav-menu a:hover,
 .nav-menu a.active {
     color: var(--accent-primary);
-    background: rgba(99, 102, 241, 0.06);
-    /* Subtle Pill Highlight */
+    /* Subtle Pill Highlight Removed */
 }
 
 .header.sticky .nav-menu a.active {
-    background: rgba(0, 0, 0, 0.05);
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.02);
+    background: transparent;
 }
 
 .menu-toggle {
