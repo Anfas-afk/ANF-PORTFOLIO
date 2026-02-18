@@ -1,6 +1,11 @@
 ﻿// Initialize Lucide icons
 lucide.createIcons();
 
+// Register GSAP Plugins
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+}
+
 // Mobile Menu Toggle (Robust & Smooth)
 const menuToggle = document.getElementById('menuToggle');
 const navContainer = document.querySelector('.nav-container');
@@ -237,7 +242,7 @@ const setupMagnetic = (elements, strength = 0.5) => {
     });
 };
 
-setupMagnetic(document.querySelectorAll('.magnetic-btn, .btn, .social-planet'));
+setupMagnetic(document.querySelectorAll('.magnetic-btn, .btn, .social-planet, .magnetic-card'));
 
 // Card Tilt Logic
 const setupTilt = (cards) => {
@@ -430,154 +435,174 @@ document.querySelectorAll('.sf-item.active, .faq-item.active, .cc-item.active').
     }
 });
 
-// Prism Aura Contact Interactivity (Blow-Away Redesign)
+// Silk/Studio Minimalist Interaction Architecture
 const setupContactInteractions = () => {
     if (OptimizationManager.reducedMotion) return;
 
-    const prismSection = document.querySelector('.contact-prism');
-    const prismCard = document.querySelector('.prism-card');
-    const blobs = document.querySelectorAll('.aura-blob');
-    const spheres = document.querySelectorAll('.prism-sphere');
+    const studioSection = document.querySelector('.studio-contact') || document.querySelector('.silk-minimalist');
     const contactForm = document.getElementById('contactForm');
-    const formStatus = document.getElementById('formStatus');
+    const submitBtn = document.querySelector('.studio-submit') || document.querySelector('.silk-submit');
 
-    if (!prismSection) return;
+    if (!studioSection) return;
 
-    // 1. Deep Parallax & 3D Tilt
-    window.addEventListener('mousemove', (e) => {
-        const rect = prismSection.getBoundingClientRect();
-        if (e.clientY >= rect.top && e.clientY <= rect.bottom) {
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-            const mouseX = e.clientX - centerX;
-            const mouseY = e.clientY - centerY;
-
-            // Background Aura Parallax (Very Slow)
-            blobs.forEach((blob, index) => {
-                const speed = (index + 1) * 0.01;
-                gsap.to(blob, {
-                    x: mouseX * speed,
-                    y: mouseY * speed,
-                    duration: 2,
-                    ease: "power2.out"
-                });
-            });
-
-            // Decor Spheres Parallax (Fast)
-            spheres.forEach((sphere, index) => {
-                const speed = (index + 1) * 0.05;
-                gsap.to(sphere, {
-                    x: mouseX * speed,
-                    y: mouseY * speed,
-                    duration: 1,
-                    ease: "power3.out"
-                });
-            });
-
-            // 3D Tilt for Central Card
-            if (prismCard) {
-                const rotateX = (mouseY / (window.innerHeight / 2)) * -5; // Max 5deg
-                const rotateY = (mouseX / (window.innerWidth / 2)) * 5;  // Max 5deg
-
-                gsap.to(prismCard, {
-                    rotateX: rotateX,
-                    rotateY: rotateY,
-                    duration: 1,
-                    ease: "power2.out",
-                    transformPerspective: 1000
-                });
-            }
-        }
-    }, { passive: true });
-
-    // 2. Entrance Reveal (GSAP)
+    // 1. Studio/Silk Reveal Animations
     if (typeof gsap !== 'undefined') {
+        const isStudio = studioSection.classList.contains('studio-contact');
+        const trigger = isStudio ? ".studio-contact" : ".silk-minimalist";
+
         const tl = gsap.timeline({
             scrollTrigger: {
-                trigger: ".contact-prism",
-                start: "top 75%",
+                trigger: trigger,
+                start: "top 70%",
             }
         });
 
-        tl.from(".prism-card", {
-            opacity: 0,
-            y: 100,
-            scale: 0.9,
-            duration: 1.5,
-            ease: "expo.out"
-        })
-            .from(".prism-tag", {
-                opacity: 0,
-                y: 20,
-                duration: 0.8,
-                ease: "power2.out"
-            }, "-=0.8")
-            .from(".prism-title", {
-                opacity: 0,
-                y: 30,
-                duration: 1,
-                ease: "power3.out"
-            }, "-=0.6")
-            .from(".p-field", {
-                opacity: 0,
-                x: 20,
-                duration: 0.6,
-                stagger: 0.1,
-                ease: "power2.out"
-            }, "-=0.8");
+        if (isStudio) {
+            tl.from(".studio-badge", { opacity: 0, x: -20, duration: 1, ease: "power3.out" })
+                .from(".studio-title", { opacity: 0, y: 40, duration: 1.2, ease: "power4.out" }, "-=0.7")
+                .from(".studio-description", { opacity: 0, y: 20, duration: 1, ease: "power3.out" }, "-=0.8")
+                .from(".studio-card", { opacity: 0, y: 30, stagger: 0.1, duration: 1, ease: "power3.out" }, "-=0.8")
+                .from(".studio-form-container", { opacity: 0, x: 40, duration: 1.5, ease: "expo.out" }, "-=1.2");
+        } else {
+            tl.from(".silk-tag", { opacity: 0, x: -20, duration: 1, ease: "power3.out" })
+                .from(".silk-title", { opacity: 0, y: 40, duration: 1.2, ease: "power4.out" }, "-=0.7")
+                .from(".silk-subtext", { opacity: 0, y: 20, duration: 1, ease: "power3.out" }, "-=0.8")
+                .from(".silk-link", { opacity: 0, y: 20, duration: 1, ease: "power3.out" }, "-=0.8")
+                .from(".silk-form-container", { opacity: 0, x: 40, duration: 1.5, ease: "expo.out" }, "-=1.2")
+                .from(".silk-field", { opacity: 0, y: 30, stagger: 0.1, duration: 1, ease: "power3.out" }, "-=1");
+        }
     }
 
-    // 3. Form Transmission (WhatsApp)
+    // 2. Refined Magnetic Button logic
+    if (submitBtn) {
+        submitBtn.addEventListener('mousemove', (e) => {
+            const rect = submitBtn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            gsap.to(submitBtn, {
+                x: x * 0.2,
+                y: y * 0.2,
+                duration: 0.4,
+                ease: "power2.out"
+            });
+        });
+
+        submitBtn.addEventListener('mouseleave', () => {
+            gsap.to(submitBtn, {
+                x: 0,
+                y: 0,
+                duration: 0.6,
+                ease: "elastic.out(1, 0.5)"
+            });
+        });
+    }
+
+    // 3. Transmission
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
             const message = document.getElementById('message').value;
 
             const whatsappNumber = '918590468094';
             const text = encodeURIComponent(
-                `Aura Connection Request:\n\n` +
+                `MODERN STUDIO INQUIRY:\n\n` +
                 `Name: ${name}\n` +
                 `Email: ${email}\n` +
-                (subject ? `Subject: ${subject}\n` : '') +
                 `Message: ${message}`
             );
 
             const whatsappURL = `https://wa.me/${whatsappNumber}?text=${text}`;
 
+            const formStatus = document.getElementById('formStatus');
             if (formStatus) {
-                formStatus.innerText = 'Synchronizing with Prism Aura...';
+                formStatus.innerText = 'PREPARING TRANSMISSION...';
                 formStatus.style.opacity = '1';
                 formStatus.style.color = 'var(--accent-primary)';
             }
 
-            const btn = contactForm.querySelector('.prism-submit-btn');
-            if (btn) {
-                btn.classList.add('sending');
-                btn.innerHTML = '<span>SYNCHRONIZING...</span><i data-lucide="loader"></i>';
-                lucide.createIcons();
+            const activeBtn = document.querySelector(".studio-submit") || document.querySelector(".silk-submit");
+            if (activeBtn) {
+                gsap.to(activeBtn, {
+                    scale: 0.95,
+                    opacity: 0.5,
+                    duration: 0.3
+                });
             }
 
             setTimeout(() => {
                 window.open(whatsappURL, '_blank');
                 contactForm.reset();
+                if (activeBtn) gsap.to(activeBtn, { scale: 1, opacity: 1, duration: 0.5 });
                 if (formStatus) {
-                    formStatus.innerText = 'Sync Complete. Portal Opening...';
-                    setTimeout(() => { formStatus.style.opacity = '0'; }, 3000);
+                    formStatus.innerText = 'MESSAGE SENT.';
+                    setTimeout(() => {
+                        gsap.to(formStatus, { opacity: 0, duration: 1 });
+                    }, 3000);
                 }
-                if (btn) {
-                    btn.classList.remove('sending');
-                    btn.innerHTML = '<span>INITIATE CONNECTION</span><i data-lucide="sparkles"></i>';
-                    lucide.createIcons();
-                }
-            }, 1500);
+            }, 1000);
         });
     }
 };
 
-// Initialize Prism Contact Interactions
+
+// Initialize Section
 if (document.readyState === 'complete') setupContactInteractions();
 else window.addEventListener('load', setupContactInteractions);
+
+// Initialize Lenis Smooth Scroll
+const lenis = (typeof Lenis !== 'undefined') ? new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+}) : null;
+
+if (lenis) {
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Sync Lenis scroll position with OptimizationManager
+    lenis.on('scroll', (e) => {
+        OptimizationManager.lastScrollY = e.scroll;
+        OptimizationManager.requestTick();
+
+        // Robust Sticky Header Management
+        const header = document.querySelector('.header');
+        if (header) {
+            header.classList.toggle('sticky', e.scroll > 100);
+        }
+    });
+
+    // Back to Top logic with Lenis
+    const btnTop = document.getElementById('backToTop');
+    if (btnTop) {
+        btnTop.addEventListener('click', (e) => {
+            e.preventDefault();
+            lenis.scrollTo(0, { duration: 1.5 });
+        });
+    }
+} else {
+    // Fallback for native scroll if Lenis is not loaded
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('.header');
+        if (header) {
+            header.classList.toggle('sticky', window.scrollY > 100);
+        }
+    }, { passive: true });
+
+    // Fallback Back to Top
+    const btnTop = document.getElementById('backToTop');
+    if (btnTop) {
+        btnTop.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+}
+

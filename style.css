@@ -371,6 +371,7 @@ ul {
 /* Header Styles */
 /* Header Styles */
 .header {
+    position: fixed;
 
     top: 0;
     left: 0;
@@ -384,7 +385,7 @@ ul {
     pointer-events: none;
     /* Let clicks pass through empty space */
     transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    background: transparent;
+    background: transparent !important;
     border: none;
     box-shadow: none;
 }
@@ -451,7 +452,7 @@ ul {
 
 @media (min-width: 769px) {
     .header.sticky .nav-container {
-        background: rgba(255, 255, 255, 0.85);
+        background: transparent;
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border: 1px solid rgba(0, 0, 0, 0.08);
@@ -6452,390 +6453,482 @@ svg {
 }
 
 /* ===============================
-   PRISM AURA CONTACT (Premium Redesign)
+   SILK MINIMALIST (Editorial Redesign)
    =============================== */
-.contact-prism {
+.silk-minimalist {
+    min-height: 100vh;
+    padding: 160px 0 100px;
+    background: #FDFDFD;
+    color: #1a1a1a;
     position: relative;
-    padding: 180px 0;
-    background: #ffffff;
-    overflow: hidden;
-    z-index: 10;
-    color: #000000;
-}
-
-/* 1. Ethereal Background Aura */
-.prism-aura-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
     overflow: hidden;
 }
 
-.aura-blob {
-    position: absolute;
-    filter: blur(100px);
-    opacity: 0.4;
-    border-radius: 50%;
-}
-
-.aura-1 {
-    width: 800px;
-    height: 800px;
-    top: -200px;
-    left: -200px;
-    background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, transparent 70%);
-    animation: driftPrism 20s infinite alternate;
-}
-
-.aura-2 {
-    width: 1000px;
-    height: 1000px;
-    bottom: -300px;
-    right: -300px;
-    background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
-    animation: driftPrism 25s infinite alternate-reverse;
-}
-
-.aura-3 {
-    width: 600px;
-    height: 600px;
-    top: 40%;
-    left: 50%;
-    background: radial-gradient(circle, rgba(236, 72, 153, 0.15) 0%, transparent 70%);
-    animation: driftPrism 15s infinite linear;
-}
-
-@keyframes driftPrism {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    100% {
-        transform: translate(100px, 100px) scale(1.1);
-    }
-}
-
-/* 2. Floating Prism Decor */
-.prism-decor {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-}
-
-.prism-sphere {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 50%;
-    box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 20px 40px rgba(0, 0, 0, 0.05);
-}
-
-.sphere-1 {
-    width: 120px;
-    height: 120px;
-    top: 15%;
-    right: 10%;
-}
-
-.sphere-2 {
-    width: 80px;
-    height: 80px;
-    bottom: 20%;
-    left: 5%;
-}
-
-.prism-shape {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    top: 50%;
-    right: 5%;
-    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
-    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* 3. Central Card Architecture */
-.prism-container {
-    position: relative;
-    z-index: 5;
-}
-
-.prism-card-wrapper {
-    perspective: 2000px;
-    max-width: 1100px;
+.silk-container {
+    max-width: 1400px;
     margin: 0 auto;
+    padding: 0 5vw;
+    position: relative;
+    z-index: 10;
 }
 
-.prism-card {
-    background: rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(40px);
-    -webkit-backdrop-filter: blur(40px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 48px;
-    padding: 20px;
-    box-shadow:
-        0 40px 100px rgba(0, 0, 0, 0.05),
-        inset 0 0 40px rgba(255, 255, 255, 0.4);
-    transition: transform 0.1s ease-out;
-}
-
-.prism-card-inner {
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 32px;
-    padding: 60px;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-}
-
-.prism-content {
+.silk-grid {
     display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 80px;
-    align-items: center;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 100px;
+    align-items: start;
 }
 
-/* 4. Narrative Side */
-.prism-tag {
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
+/* Left: Hero Styling */
+.silk-tag {
+    font-size: 0.75rem;
+    font-weight: 800;
     letter-spacing: 0.3em;
     color: var(--accent-primary);
-    background: rgba(99, 102, 241, 0.08);
-    padding: 6px 16px;
-    border-radius: 50px;
-    display: inline-block;
-    margin-bottom: 25px;
-}
-
-.prism-title {
-    font-size: clamp(2.5rem, 5vw, 3.8rem);
-    font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
     margin-bottom: 30px;
+    text-transform: uppercase;
 }
 
-.prism-title em {
+.silk-title {
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    line-height: 0.95;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    margin-bottom: 40px;
+    color: #1a1a1a;
+}
+
+.silk-italic {
     font-family: serif;
     font-style: italic;
-    font-weight: 400;
+    font-weight: 300;
     color: var(--accent-primary);
+    padding-right: 0.1em;
 }
 
-.prism-description {
-    font-size: 1.1rem;
-    color: rgba(0, 0, 0, 0.6);
-    margin-bottom: 40px;
-    line-height: 1.6;
+.silk-subtext {
+    font-size: 1.2rem;
+    color: #4a4a4a;
+    line-height: 1.7;
+    margin-bottom: 50px;
 }
 
-.prism-details {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.prism-contact-group {
-    background: rgba(255, 255, 255, 0.4);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    border-radius: 20px;
-    padding: 15px 25px;
-    display: inline-flex;
-    flex-direction: column;
-    gap: 10px;
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    align-self: flex-start;
-}
-
-.prism-contact-group:hover {
-    background: rgba(255, 255, 255, 0.8);
-    border-color: var(--accent-primary);
-    transform: translateX(10px);
-    box-shadow: 0 15px 30px rgba(99, 102, 241, 0.1);
-}
-
-.p-detail {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 5px 0;
-    transition: transform 0.3s ease;
-}
-
-.p-detail i {
-    width: 20px;
-    height: 20px;
-    color: var(--accent-primary);
-    transition: all 0.3s ease;
-}
-
-.prism-contact-group:hover .p-detail i {
-    color: #000000;
-}
-
-.p-detail:hover i {
-    transform: scale(1.2) rotate(10deg);
-    color: #000000;
-}
-
-.p-detail a {
-    font-size: 1rem;
+.silk-link {
+    font-size: 1.5rem;
     font-weight: 600;
-    color: #000000;
+    color: #1a1a1a;
     text-decoration: none;
-    transition: color 0.3s ease;
-    white-space: nowrap;
-}
-
-.p-detail a:hover {
-    color: var(--accent-primary);
-}
-
-/* 5. Precise Beauty Form */
-.prism-form {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-}
-
-.p-field {
     position: relative;
-    background: rgba(255, 255, 255, 0.5);
-    border-radius: 16px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    transition: all 0.4s ease;
+    display: inline-block;
 }
 
-.p-field input,
-.p-field textarea {
+.link-border {
+    position: absolute;
+    bottom: -5px;
+    left: 0;
     width: 100%;
-    padding: 18px 24px;
+    height: 1px;
+    background: #1a1a1a;
+    transform: scaleX(1);
+    transform-origin: left;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.silk-link:hover .link-border {
+    transform: scaleX(0);
+    transform-origin: right;
+}
+
+/* Right: Form Styling */
+.silk-form-container {
+    background: #fff;
+    padding: 60px;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.03);
+}
+
+.silk-field {
+    margin-bottom: 45px;
+    position: relative;
+}
+
+.silk-field label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+    color: #888;
+    margin-bottom: 15px;
+    transition: color 0.3s ease;
+}
+
+.silk-field input,
+.silk-field textarea {
+    width: 100%;
     background: transparent;
     border: none;
-    font-size: 1.05rem;
-    color: #000000;
     font-family: inherit;
-}
-
-.p-field input:focus,
-.p-field textarea:focus {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #1a1a1a;
+    padding: 10px 0;
     outline: none;
 }
 
-.p-focus-line {
+.field-line {
+    width: 100%;
+    height: 1px;
+    background: #e0e0e0;
+    position: relative;
+    overflow: hidden;
+}
+
+.field-line::after {
+    content: '';
     position: absolute;
-    bottom: -1px;
-    left: 16px;
-    right: 16px;
-    height: 2px;
-    background: var(--accent-primary);
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #1a1a1a;
     transform: scaleX(0);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+    transform-origin: left;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.p-field:focus-within {
-    border-color: var(--accent-primary);
-    background: #ffffff;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-}
-
-.p-field:focus-within .p-focus-line {
+.silk-field input:focus~.field-line::after,
+.silk-field textarea:focus~.field-line::after {
     transform: scaleX(1);
 }
 
-/* 6. Shimmering Submit */
-.prism-submit-btn {
+.silk-field:focus-within label {
+    color: #1a1a1a;
+}
+
+.silk-submit {
     width: 100%;
-    padding: 22px;
-    background: #000000;
-    color: #ffffff;
+    padding: 25px;
+    background: #1a1a1a;
+    color: #fff;
     border: none;
-    border-radius: 16px;
-    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     font-weight: 800;
     letter-spacing: 0.1em;
     cursor: pointer;
+    transition: all 0.4s ease;
+    margin-top: 20px;
+}
+
+.silk-submit:hover {
+    background: var(--accent-primary);
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
+.btn-arrow {
+    font-size: 1.4rem;
+    transition: transform 0.4s ease;
+}
+
+.silk-submit:hover .btn-arrow {
+    transform: translateX(10px);
+}
+
+.silk-status {
+    margin-top: 25px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+/* Texture & Details */
+.silk-texture {
+    position: absolute;
+    inset: 0;
+    background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+    opacity: 0.02;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .silk-grid {
+        grid-template-columns: 1fr;
+        gap: 80px;
+    }
+
+    .silk-container {
+        padding: 0 40px;
+    }
+
+    .silk-form-container {
+        padding: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .silk-title {
+        font-size: 3rem;
+    }
+
+    .silk-form-container {
+        padding: 30px 20px;
+    }
+}
+
+/* ===============================
+   MODERN STUDIO CONTACT (LIGHT)
+   =============================== */
+.studio-contact {
+    position: relative;
+    padding: 100px 0 150px;
+    background: #FFFFFF;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+.studio-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20vw;
+    font-weight: 900;
+    color: #f0f0f0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.5;
+    letter-spacing: -0.05em;
+}
+
+.studio-container {
+    position: relative;
+    z-index: 2;
+}
+
+.studio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+}
+
+.studio-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #f0f0f0;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 24px;
+}
+
+.studio-title {
+    font-size: 4.5rem;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+    color: #1a1a1a;
+}
+
+.studio-description {
+    font-size: 1.15rem;
+    color: #4a4a4a;
+    max-width: 450px;
+    margin-bottom: 60px;
+    line-height: 1.6;
+}
+
+.studio-contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.studio-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.studio-card:hover {
+    background: #ffffff;
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+    border-color: var(--accent-primary);
+}
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+    background: #1a1a1a;
+    color: #FFFFFF;
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.4s ease;
-    white-space: nowrap;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.prism-submit-btn::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent 45%, rgba(255, 255, 255, 0.2) 50%, transparent 55%);
-    transform: rotate(-45deg);
-    animation: prismShimmer 3s infinite;
-}
-
-@keyframes prismShimmer {
-    0% {
-        transform: translateX(-100%) rotate(-45deg);
-    }
-
-    100% {
-        transform: translateX(100%) rotate(-45deg);
-    }
-}
-
-.prism-submit-btn:hover {
+.studio-card:hover .card-icon {
+    transform: scale(1.05);
     background: var(--accent-primary);
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
 }
 
-/* Mobile Adjustments */
+
+.card-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+}
+
+.card-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.card-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-decoration: none;
+}
+
+.card-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+    color: #888;
+}
+
+.studio-card:hover .card-arrow {
+    background: var(--accent-primary);
+    color: #FFFFFF;
+    border-color: var(--accent-primary);
+    transform: rotate(-45deg);
+}
+
+
+.studio-form-container {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 30px;
+    padding: 50px;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.04);
+}
+
+.studio-field {
+    margin-bottom: 30px;
+}
+
+.studio-field label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+}
+
+.studio-field input,
+.studio-field textarea {
+    width: 100%;
+    padding: 16px 20px;
+    background: #f9f9f9;
+    border: 1px solid #eeeeee;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: #1a1a1a;
+    transition: all 0.3s ease;
+}
+
+.studio-field input:focus,
+.studio-field textarea:focus {
+    background: #ffffff;
+    border-color: #1a1a1a;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.02);
+}
+
+.studio-submit {
+    width: 100%;
+    padding: 20px;
+    background: #1a1a1a;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-top: 20px;
+}
+
+.studio-submit:hover {
+    background: var(--accent-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(99, 102, 241, 0.2);
+}
+
+
+.studio-status {
+    margin-top: 20px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
 @media (max-width: 1024px) {
-    .prism-content {
+    .studio-grid {
         grid-template-columns: 1fr;
         gap: 60px;
     }
 
-    .prism-card-inner {
-        padding: 40px;
-    }
-
-    .prism-title {
-        font-size: 2.8rem;
-    }
-
-    .prism-aura-bg {
-        opacity: 0.6;
+    .studio-title {
+        font-size: 3.5rem;
     }
 }
 
 @media (max-width: 768px) {
-    .contact-prism {
-        padding: 100px 0;
+    .studio-contact {
+        padding: 80px 0;
     }
 
-    .prism-card {
-        border-radius: 32px;
-        padding: 10px;
+    .studio-form-container {
+        padding: 30px;
     }
 
-    .prism-card-inner {
-        border-radius: 24px;
-        padding: 30px 20px;
-    }
-
-    .prism-sphere,
-    .prism-shape {
-        display: none;
+    .studio-bg-text {
+        font-size: 30vw;
     }
 }
