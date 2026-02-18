@@ -425,15 +425,78 @@ if (ticketContainer && ticketGlass && !OptimizationManager.reducedMotion) {
     if (document.readyState === 'complete') setTimeout(initIntro, 100);
     else window.addEventListener('load', () => setTimeout(initIntro, 100));
 })();
-// Ensure the initially active item has its height set
-document.querySelectorAll('.sf-item.active, .faq-item.active, .cc-item.active').forEach(item => {
-    const body = item.querySelector('.sf-body, .faq-answer, .cc-body');
-    if (body) {
-        setTimeout(() => {
-            body.style.height = body.scrollHeight + 'px';
-        }, 500);
-    }
-});
+// Code Card Typing Animation
+const initCodeAnimation = () => {
+    const typewriter = document.getElementById('typewriter');
+    if (!typewriter) return;
+
+    const code = `const Anfas = {
+  role: 'Creative Developer',
+  skills: [
+    'UI/UX Design',
+    'Frontend Dev',
+    'Motion Graphics'
+  ],
+  createMagic: function() {
+    return 'Stunning Experiences';
+  }
+}`;
+
+    const highlight = (text) => {
+        return text
+            .replace(/\b(const|function|return)\b/g, '<span class="keyword">$1</span>')
+            .replace(/\b(Anfas)\b/g, '<span class="class-name">$1</span>')
+            .replace(/\b(role|skills|createMagic)\b/g, '<span class="property">$1</span>')
+            .replace(/('.*?')/g, '<span class="string">$1</span>');
+    };
+
+    let i = 0;
+    typewriter.innerHTML = '';
+
+    const type = () => {
+        if (i < code.length) {
+            const char = code.charAt(i);
+            // Handle multiple characters at once for faster feel on spaces/newlines
+            let skip = 0;
+            if (char === ' ' || char === '\n') skip = 1;
+
+            i += 1 + skip;
+            const currentText = code.substring(0, Math.min(i, code.length));
+            typewriter.innerHTML = highlight(currentText);
+
+            let delay = Math.random() * 40 + 30;
+            if (char === '\n') delay = 300;
+            if (char === ':') delay = 150;
+
+            setTimeout(type, delay);
+        } else {
+            // Pulse effect when finished
+            const card = typewriter.closest('.code-card');
+            if (card) {
+                card.style.boxShadow = '0 0 30px rgba(99, 102, 241, 0.4)';
+                setTimeout(() => {
+                    card.style.boxShadow = '';
+                }, 1000);
+            }
+
+            setTimeout(() => {
+                i = 0;
+                typewriter.innerHTML = '';
+                type();
+            }, 6000); // 6s pause before restart
+        }
+    };
+
+    // Use Intersection Observer to start when visible
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            type();
+            observer.disconnect();
+        }
+    }, { threshold: 0.5 });
+
+    observer.observe(typewriter);
+};
 
 // Silk/Studio Minimalist Interaction Architecture
 const setupContactInteractions = () => {
@@ -550,8 +613,15 @@ const setupContactInteractions = () => {
 
 
 // Initialize Section
-if (document.readyState === 'complete') setupContactInteractions();
-else window.addEventListener('load', setupContactInteractions);
+if (document.readyState === 'complete') {
+    setupContactInteractions();
+    initCodeAnimation();
+} else {
+    window.addEventListener('load', () => {
+        setupContactInteractions();
+        initCodeAnimation();
+    });
+}
 
 // Initialize Lenis Smooth Scroll
 const lenis = (typeof Lenis !== 'undefined') ? new Lenis({
