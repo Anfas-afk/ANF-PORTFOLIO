@@ -498,18 +498,84 @@ const initCodeAnimation = () => {
     observer.observe(typewriter);
 };
 
-// Silk/Studio Minimalist Interaction Architecture
+// --------------------------------------------------------------------------
+// Contact Form Logic (Reliable & Decoupled)
+// --------------------------------------------------------------------------
+const initContactForm = () => {
+    const contactForm = document.getElementById('contactForm');
+    if (!contactForm) return;
+
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('Subject').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        if (!name || !email || !subject || !message) {
+            alert("Please fill all fields");
+            return;
+        }
+
+        const whatsappNumber = '918590468094';
+        const text = encodeURIComponent(
+            `Hello Anfas:\n\n` +
+            `Name: ${name}\n` +
+            `Email: ${email}\n` +
+            `Subject: ${subject}\n\n` +
+            `Message: ${message}`
+        );
+
+        const whatsappURL = `https://wa.me/${whatsappNumber}?text=${text}`;
+
+        const formStatus = document.getElementById('formStatus');
+        if (formStatus) {
+            formStatus.innerText = 'PREPARING TRANSMISSION...';
+            formStatus.style.opacity = '1';
+            formStatus.style.color = 'var(--accent-primary)';
+        }
+
+        const activeBtn = document.querySelector(".studio-submit") || document.querySelector(".silk-submit");
+        if (activeBtn && typeof gsap !== 'undefined') {
+            gsap.to(activeBtn, {
+                scale: 0.95,
+                opacity: 0.5,
+                duration: 0.3
+            });
+        }
+
+        setTimeout(() => {
+            // Reliable redirection
+            window.location.href = whatsappURL;
+
+            setTimeout(() => {
+                contactForm.reset();
+                if (activeBtn && typeof gsap !== 'undefined') gsap.to(activeBtn, { scale: 1, opacity: 1, duration: 0.5 });
+                if (formStatus) {
+                    formStatus.innerText = 'MESSAGE SENT.';
+                    setTimeout(() => {
+                        gsap.to(formStatus, { opacity: 0, duration: 1 });
+                    }, 3000);
+                }
+            }, 500);
+        }, 1000);
+
+        return false;
+    });
+};
+
+// Silk/Studio Minimalist Interaction Architecture (Motion-Dependent)
 const setupContactInteractions = () => {
     if (OptimizationManager.reducedMotion) return;
 
     const studioSection = document.querySelector('.studio-contact') || document.querySelector('.silk-minimalist');
-    const contactForm = document.getElementById('contactForm');
     const submitBtn = document.querySelector('.studio-submit') || document.querySelector('.silk-submit');
 
     if (!studioSection) return;
 
     // 1. Studio/Silk Reveal Animations
-    if (typeof gsap !== 'undefined') {
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         const isStudio = studioSection.classList.contains('studio-contact');
         const trigger = isStudio ? ".studio-contact" : ".silk-minimalist";
 
@@ -537,7 +603,7 @@ const setupContactInteractions = () => {
     }
 
     // 2. Refined Magnetic Button logic
-    if (submitBtn) {
+    if (submitBtn && typeof gsap !== 'undefined') {
         submitBtn.addEventListener('mousemove', (e) => {
             const rect = submitBtn.getBoundingClientRect();
             const x = e.clientX - rect.left - rect.width / 2;
@@ -560,65 +626,17 @@ const setupContactInteractions = () => {
             });
         });
     }
-
-    // 3. Transmission
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-
-            const whatsappNumber = '918590468094';
-            const text = encodeURIComponent(
-                `MODERN STUDIO INQUIRY:\n\n` +
-                `Name: ${name}\n` +
-                `Email: ${email}\n` +
-                `Message: ${message}`
-            );
-
-            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${text}`;
-
-            const formStatus = document.getElementById('formStatus');
-            if (formStatus) {
-                formStatus.innerText = 'PREPARING TRANSMISSION...';
-                formStatus.style.opacity = '1';
-                formStatus.style.color = 'var(--accent-primary)';
-            }
-
-            const activeBtn = document.querySelector(".studio-submit") || document.querySelector(".silk-submit");
-            if (activeBtn) {
-                gsap.to(activeBtn, {
-                    scale: 0.95,
-                    opacity: 0.5,
-                    duration: 0.3
-                });
-            }
-
-            setTimeout(() => {
-                window.open(whatsappURL, '_blank');
-                contactForm.reset();
-                if (activeBtn) gsap.to(activeBtn, { scale: 1, opacity: 1, duration: 0.5 });
-                if (formStatus) {
-                    formStatus.innerText = 'MESSAGE SENT.';
-                    setTimeout(() => {
-                        gsap.to(formStatus, { opacity: 0, duration: 1 });
-                    }, 3000);
-                }
-            }, 1000);
-        });
-    }
 };
-
 
 // Initialize Section
 if (document.readyState === 'complete') {
     setupContactInteractions();
+    initContactForm();
     initCodeAnimation();
 } else {
     window.addEventListener('load', () => {
         setupContactInteractions();
+        initContactForm();
         initCodeAnimation();
     });
 }
@@ -675,4 +693,3 @@ if (lenis) {
         });
     }
 }
-

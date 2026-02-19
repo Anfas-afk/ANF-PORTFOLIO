@@ -6965,18 +6965,101 @@ svg {
     .studio-title {
         font-size: 3.5rem;
     }
+
+    .studio-description {
+        max-width: 100%;
+    }
 }
 
 @media (max-width: 768px) {
     .studio-contact {
-        padding: 80px 0;
+        padding: 60px 0 100px;
+    }
+
+    .studio-title {
+        font-size: 2.8rem;
+    }
+
+    .studio-description {
+        font-size: 1rem;
+        margin-bottom: 40px;
     }
 
     .studio-form-container {
-        padding: 30px;
+        padding: 40px 25px;
+        border-radius: 24px;
     }
 
     .studio-bg-text {
-        font-size: 30vw;
+        font-size: 25vw;
+        opacity: 0.3;
+    }
+
+    .card-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .card-value {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .studio-contact {
+        padding: 50px 0 80px;
+    }
+
+    .studio-title {
+        font-size: 2.2rem;
+        letter-spacing: -0.02em;
+    }
+
+    .studio-badge {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+
+    .studio-card {
+        padding: 16px;
+        gap: 12px;
+    }
+
+    .card-icon {
+        width: 45px;
+        height: 45px;
+    }
+
+    .card-icon i {
+        width: 20px;
+        height: 20px;
+    }
+
+    .card-label {
+        font-size: 0.75rem;
+    }
+
+    .card-value {
+        font-size: 0.9rem;
+    }
+
+    .studio-form-container {
+        padding: 30px 20px;
+        margin-top: 20px;
+    }
+
+    .studio-field {
+        margin-bottom: 20px;
+    }
+
+    .studio-field input,
+    .studio-field textarea {
+        padding: 12px 16px;
+        font-size: 0.95rem;
+    }
+
+    .studio-submit {
+        padding: 16px;
+        font-size: 1rem;
     }
 }
