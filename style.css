@@ -6974,6 +6974,34 @@ svg {
 @media (max-width: 768px) {
     .studio-contact {
         padding: 60px 0 100px;
+        overflow-x: hidden;
+    }
+
+    .studio-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 0 20px;
+    }
+
+    .studio-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 50px;
+    }
+
+    .studio-info-side,
+    .studio-form-side {
+        width: 100%;
+        max-width: 600px;
+        /* Constrain for tablet, full width will be handled by container */
+    }
+
+    .studio-header {
+        text-align: center;
     }
 
     .studio-title {
@@ -6983,16 +7011,19 @@ svg {
     .studio-description {
         font-size: 1rem;
         margin-bottom: 40px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .studio-form-container {
         padding: 40px 25px;
         border-radius: 24px;
+        width: 100%;
     }
 
     .studio-bg-text {
         font-size: 25vw;
-        opacity: 0.3;
+        opacity: 0.2;
     }
 
     .card-icon {
@@ -7010,6 +7041,10 @@ svg {
         padding: 50px 0 80px;
     }
 
+    .studio-container {
+        padding: 0 15px;
+    }
+
     .studio-title {
         font-size: 2.2rem;
         letter-spacing: -0.02em;
@@ -7023,6 +7058,7 @@ svg {
     .studio-card {
         padding: 16px;
         gap: 12px;
+        width: 100%;
     }
 
     .card-icon {
@@ -7046,6 +7082,7 @@ svg {
     .studio-form-container {
         padding: 30px 20px;
         margin-top: 20px;
+        width: 100%;
     }
 
     .studio-field {
