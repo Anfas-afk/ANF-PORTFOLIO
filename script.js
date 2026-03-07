@@ -280,6 +280,21 @@ const setupTilt = (cards) => {
 
 setupTilt(document.querySelectorAll('.card-wrapper'));
 
+// Tech Card Mouse Tracking (Radial Glow)
+const setupTechCardHover = (cards) => {
+    if (OptimizationManager.reducedMotion) return;
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        }, { passive: true });
+    });
+};
+setupTechCardHover(document.querySelectorAll('.tech-card'));
+
 // 1. Scroll Reveal Observer
 const revealElements = document.querySelectorAll('.reveal-on-scroll');
 const revealOptions = {
@@ -628,16 +643,66 @@ const setupContactInteractions = () => {
     }
 };
 
+const initProcessAnimation = () => {
+    const processSection = document.querySelector('.process-section');
+    const processLayout = document.querySelector('.process-layout');
+    const cards = document.querySelectorAll('.process-card');
+
+    if (processSection && processLayout && cards.length > 0 && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+
+        const mm = gsap.matchMedia();
+
+        mm.add("(min-width: 1024px)", () => {
+            // Function to calculate exact scroll distance
+            const getScrollWidth = () => processLayout.scrollWidth - window.innerWidth;
+
+            gsap.to(processLayout, {
+                x: () => -getScrollWidth(),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: processSection,
+                    start: "top top",
+                    end: () => `+=${getScrollWidth()}`,
+                    pin: true,
+                    scrub: 1,
+                    invalidateOnRefresh: true, // Crucial for recalculating on resize
+                }
+            });
+
+            // Refresh on load to ensure accuracy
+            window.addEventListener('load', () => ScrollTrigger.refresh());
+        });
+
+        // Simple Reveal on Mobile
+        mm.add("(max-width: 1023px)", () => {
+            gsap.from(cards, {
+                y: 50,
+                opacity: 0,
+                stagger: 0.2,
+                duration: 1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: processSection,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            });
+        });
+    }
+};
+
 // Initialize Section
 if (document.readyState === 'complete') {
     setupContactInteractions();
     initContactForm();
     initCodeAnimation();
+    initProcessAnimation();
 } else {
     window.addEventListener('load', () => {
         setupContactInteractions();
         initContactForm();
         initCodeAnimation();
+        initProcessAnimation();
     });
 }
 
@@ -655,8 +720,9 @@ if (lenis) {
     }
     requestAnimationFrame(raf);
 
-    // Sync Lenis scroll position with OptimizationManager
+    // Sync Lenis scroll position with OptimizationManager & ScrollTrigger
     lenis.on('scroll', (e) => {
+        ScrollTrigger.update(); // CRITICAL for GSAP scroll animations
         OptimizationManager.lastScrollY = e.scroll;
         OptimizationManager.requestTick();
 
